@@ -1,0 +1,22 @@
+* {
+    justify-content: center;
+    text-align: center;
+}
+
+table,
+th,
+td {
+    border: 1px solid;
+}
+  
+  img {
+    max-width: 10em;
+    max-height: 10em;
+    }
+
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}

@@ -3,48 +3,33 @@
 <html>
 
 <head>
-  <title>TP3</title>
+  <title>Accueil</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='./css/main.css') }}">
 </head>
 
-<style>
-  table,
-  th,
-  td {
-    border: 1px solid;
-  }
-</style>
-
 <body>
-  <p id="message">{{ message }}</p>
-  <form action="/liste-de-jeu" method="post">
-    <table>
-      <tr>
-        <th>Nom</th>
-        <th>Type de jeu</th>
-        <th>Prix</th>
-        <th>Description</th>
-      </tr>
+  <header>
+    <h1>Bienvenue sur Pigeon-Gate</h1>
+  </header>
 
-      {% for jeu in jeux %}
-      <tr>
-        <td>{{ jeu.nom }}</td>
-        <td>{{ jeu.typeJeu }}</td>
-        <td>{{ jeu.prix }}</td>
-        <td>{{ jeu.description }}</td>
-        <td>
-          <buttton><a href="/delete/{{loop.index0}}">Supprimer</a></buttton>
-        </td>
-        <td>
-          <buttton><a href="/infos/{{loop.index0}}">Voir jeu</a></buttton>
-        </td>
-      </tr>
+    <a href="">Se connecter</a><br>
+    <a href="">S'inscrire</a>
+
+
+
+  <div class="pigeon">
+    <h2>Les pigeons TRENDY ✨</h2>
+
+    {% for pigeon in pigeons %}
+    <div class="container">
+      <div class="pigeon">
+        <img src="{{ pigeon[5] }}" alt="pigeon" style="width:100%">
+        <b><p>{{ pigeon[1] }}</p></b>
+        <p>Couleur : {{ pigeon[2] }}</p>
+        <p>Looté à : {{ pigeon[4] }}</p>
+      </div>
       {% endfor %}
-
-    </table>
-  </form>
-
-  <br>
-  <a href="/saisie-jeu">Ajouter un jeu</a>
+    </div>
 </body>
 
 </html>
