@@ -50,7 +50,7 @@ def login_user():
         mycursor.execute("SELECT * FROM Pigeon")
         resultPigeon = mycursor.fetchall()
         if testLogin:
-            return render_template("welcome.html", pigeons=resultPigeon);
+            return render_template("welcome.html", pigeons=resultPigeon, pseudo=pseudo);
         else:
             return render_template("login.html");
 
