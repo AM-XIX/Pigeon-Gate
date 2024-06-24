@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulaire saisie de jeu</title>
+</head>
+
+<body>
+    <h1>Formulaire de saisie de jeu</h1>
+    <p>Description du système de jeu</p>
+    <form action="/saisie-jeu" method="post">
+        <label for="name">Nom du jeu</label><br>
+        <input type="text" name="nom" id="nom" required><br>
+
+        <label for="price">Prix du jeu</label><br>
+        <input type="number" name="prix" id="prix" required><br>
+
+        <select name="types" id="typesJeu" required>
+            <option value="">Choisissez une plateforme</option>
+            {% for type in typesJeu %}
+                <option value="{{ type }}">{{ type }}</option>
+            {% endfor %}
+        </select><br>
+
+        <label for="description">Description du jeu</label><br>
+        <textarea name="description" id="description" cols="20" rows="10" required></textarea><br>
+        <input type="submit" value="Envoyer">
+
+        <br>
+        <a href="/">Accueil</a>
+</body>
+
+</html>

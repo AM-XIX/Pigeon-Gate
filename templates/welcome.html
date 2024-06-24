@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+  <title>TP3</title>
+</head>
+
+<style>
+  table,
+  th,
+  td {
+    border: 1px solid;
+  }
+</style>
+
+<body>
+  <p id="message">{{ message }}</p>
+  <form action="/liste-de-jeu" method="post">
+    <table>
+      <tr>
+        <th>Nom</th>
+        <th>Type de jeu</th>
+        <th>Prix</th>
+        <th>Description</th>
+      </tr>
+
+      {% for jeu in jeux %}
+      <tr>
+        <td>{{ jeu.nom }}</td>
+        <td>{{ jeu.typeJeu }}</td>
+        <td>{{ jeu.prix }}</td>
+        <td>{{ jeu.description }}</td>
+        <td>
+          <buttton><a href="/delete/{{loop.index0}}">Supprimer</a></buttton>
+        </td>
+        <td>
+          <buttton><a href="/infos/{{loop.index0}}">Voir jeu</a></buttton>
+        </td>
+      </tr>
+      {% endfor %}
+
+    </table>
+  </form>
+
+  <br>
+  <a href="/saisie-jeu">Ajouter un jeu</a>
+</body>
+
+</html>

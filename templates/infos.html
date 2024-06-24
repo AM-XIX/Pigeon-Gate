@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <title>Jeu</title>
+</head>
+
+<style>
+    table,
+    th,
+    td {
+        border: 1px solid;
+    }
+
+    h1 {
+        text-align: center;
+        font-weight: bold;
+    }
+</style>
+
+<body>
+    <h1>Informations sur le jeu</h1>
+    <p><b>Nom :</b> {{ jeu.nom }}</p>
+    <p><b>Type de jeu :</b> {{ jeu.typeJeu }}</p>
+    <p><b>Prix :</b> {{ jeu.prix }}</p>
+    <p><b>Description :</b> {{ jeu.description }}</p>
+    <br>
+    <a href="/">Accueil</a><br>
+    <a href="/saisie-jeu">Ajouter un jeu</a>
+</body>
+
+</html>
