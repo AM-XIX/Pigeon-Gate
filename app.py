@@ -16,6 +16,23 @@ pigeons = [];
 mycursor = mydb.cursor()
 mycursor.execute("SELECT * FROM Pigeon")
 allPigeons = mycursor.fetchall()
+
+
+def dataToPigeon(datas):
+    for pigeon in datas:
+        pigeon = {
+            "idPigeon": pigeon[0],
+            "prenomPigeon": pigeon[1],
+            "color": pigeon[2],
+            "rateWalk": pigeon[3],
+            "rateVibe": pigeon[4],
+            "rateOriginality": pigeon[5],
+            "place": pigeon[6],
+            "urlPhoto": pigeon[7],
+            "idUser": pigeon[7]
+        }    
+        pigeons.append(pigeon)
+
 dataToPigeon(allPigeons)
 
 @app.route("/", methods=['GET', 'POST'])
@@ -57,21 +74,6 @@ def login():
             return render_template("login.html", messageErrorLogin=messageErrorLogin);
     else:
         return render_template("login.html");
-
-def dataToPigeon(datas):
-    for pigeon in datas:
-        pigeon = {
-            "idPigeon": pigeon[0],
-            "prenomPigeon": pigeon[1],
-            "color": pigeon[2],
-            "rateWalk": pigeon[3],
-            "rateVibe": pigeon[4],
-            "rateOriginality": pigeon[5],
-            "place": pigeon[6],
-            "urlPhoto": pigeon[7],
-            "idUser": pigeon[7]
-        }    
-        pigeons.append(pigeon)
 
 
 @app.route("/add_pigeon", methods=['POST'])
