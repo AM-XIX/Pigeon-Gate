@@ -8,8 +8,11 @@
 </head>
 
 <body>
-    <h1>S'inscrire</h1>
-    <form action="/register_user" method="post">
+    {% if messageError %}
+    <p style="color: red;">{{ messageError }}</p>
+    {% endif %}
+    <h1>REJOINS LE CLUB</h1>
+    <form action="/register" method="post">
         <label for="pseudo">Pseudo</label><br>
         <input type="pseudo" name="pseudo" id="pseudo" required><br>
 
@@ -20,28 +23,28 @@
             <legend>Votre Avatar</legend>
             <div>
                 <label for="pp1">
-                    <input type="radio" id="pp1" name="pp" value="pp1"/>
+                    <input type="radio" id="pp1" name="typeProfilePicture" value="profile1"/>
                     <img src="./static/images/pp1.png" alt="pp1" style="width:10%">
                 </label>
             </div>
 
             <div>
                 <label for="pp2">
-                    <input type="radio" id="pp2" name="pp" value="pp2" />
+                    <input type="radio" id="pp2" name="typeProfilePicture" value="profile2" />
                     <img src="./static/images/pp2.png" alt="pp2" style="width:10%">
                 </label>
             </div>
 
             <div>
                 <label for="pp3">
-                    <input type="radio" id="pp3" name="pp" value="pp3" />
+                    <input type="radio" id="pp3" name="typeProfilePicture" value="profile3" />
                     <img src="./static/images/pp3.png" alt="pp3" style="width:10%">
                 </label>
             </div>
 
             <div>
                 <label for="pp4">
-                    <input type="radio" id="pp4" name="pp" value="pp4" />
+                    <input type="radio" id="pp4" name="typeProfilePicture" value="profile4" />
                     <img src="./static/images/pp4.png" alt="pp4" style="width:10%">
                 </label>
             </div>

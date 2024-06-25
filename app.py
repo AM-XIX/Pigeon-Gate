@@ -15,44 +15,48 @@ mydb = mysql.connector.connect(
 pigeons = [];
 
 mycursor = mydb.cursor()
+mycursor.execute("SELECT * FROM Pigeon")
+allPigeons = mycursor.fetchall()
 
 @app.route("/", methods=['GET', 'POST'])
 def welcome():
     if mydb.is_connected():
-        mycursor.execute("SELECT * FROM Pigeon")
-        testLogin = mycursor.fetchall()
-    return render_template("welcome.html", pigeons=testLogin);
+        return render_template("welcome.html", pigeons=allPigeons);
 
-@app.route("/login")
-def login():
-    return render_template("login.html");
-
-@app.route("/register")
+@app.route("/register", methods=['GET', 'POST'])
 def register():
-    return render_template("register.html");
-
-@app.route("/register_user", methods=['POST'])
-def register_user():
     if request.method == 'POST':
         pseudo = request.form['pseudo']
         password = request.form['password']
-        mycursor.execute("INSERT INTO User (pseudo, password) VALUES (%s, %s)", (pseudo, password))
+        typeProfilePicture = request.form['typeProfilePicture']
+        mycursor.execute("SELECT * FROM User WHERE pseudo = %s", (pseudo,))
+        messageError = "Ce pseudo est déjà utilisé"
+        if mycursor.fetchall():
+            print(typeProfilePicture)
+            return render_template("register.html", messageError=messageError);
+        if not pseudo or not password or not typeProfilePicture:
+            message_error = "Tous les champs sont obligatoires."
+            return render_template('register.html', messageError=message_error)
+        mycursor.execute("INSERT INTO User (pseudo, password, typeProfilePicture) VALUES (%s, %s, %s)", (pseudo, password, typeProfilePicture))
         mydb.commit()
-        return render_template("welcome.html");
+        return render_template("welcome.html", pigeons=allPigeons, pseudo=pseudo);
+    else:
+        return render_template("register.html");
 
-@app.route("/login_user", methods=['POST'])
-def login_user():
+@app.route("/login", methods=['POST', 'GET'])
+def login():
     if request.method == 'POST':
         pseudo = request.form['pseudo']
         password = request.form['password']
         mycursor.execute("SELECT * FROM User WHERE pseudo = %s AND password = %s", (pseudo, password))
         testLogin = mycursor.fetchall()
-        mycursor.execute("SELECT * FROM Pigeon")
-        resultPigeon = mycursor.fetchall()
         if testLogin:
-            return render_template("welcome.html", pigeons=resultPigeon, pseudo=pseudo);
+            return render_template("welcome.html", pigeons=allPigeons, pseudo=pseudo);
         else:
-            return render_template("login.html");
+            messageErrorLogin = "Pseudo ou mot de passe incorrect"
+            return render_template("login.html", messageErrorLogin=messageErrorLogin);
+    else:
+        return render_template("login.html");
 
 
 
