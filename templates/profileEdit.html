@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <title>Profil</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='./css/main.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='./css/welcome.css') }}">
+</head>
+
+<body>
+    <header>
+        <h1>Pigeon Gate</h1>
+        <hr>
+    </header>
+    <nav>
+        <div>
+            <li><a href="">the pigeons</a></li>
+            <li><a href="">à propos</a></li>
+        </div>
+        <div>
+            <img src="{{ url_for('static', filename='./images/' ~ user.typeProfilePicture ~ '.png') }}"
+                alt="{{ user.typeProfilePicture }}" style="width:15%;">
+            <li>{{ user.pseudo }}</li>
+            <li><a href="{{ url_for('logout') }}">Se déconnecter</a></li>
+        </div>
+    </nav>
+    <section>
+        <h1>{{ user.pseudo }}</h1>
+        <img src="{{ url_for('static', filename='./images/' ~ user.typeProfilePicture ~ '.png') }}"
+            alt="{{ user.typeProfilePicture }}" style="width:10%;">
+        <p>Biographie</p>
+        <form action="{{ url_for('changeBio') }}" method="post">
+            <textarea id="bio" name="bio">{{ user.bio }}</textarea>
+            <input type="submit" value="Modifier">
+        </form>
+    </section>
+
+</body>
+
+</html>

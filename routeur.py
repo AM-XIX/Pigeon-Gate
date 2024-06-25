@@ -25,7 +25,7 @@ def register():
             return render_template("register.html", messageErrorRegister=messageErrorRegister);
         else:
             session['pseudo'] = pseudo
-            session['idUser'] = model.getUserbyPseudo(pseudo)['idUser']
+            session['idUser'] = model.getUserbyPseudo(pseudo);
             model.newUser(pseudo, password, typeProfilePicture)
             pigeons = model.getAllPigeons()
             return render_template("welcome.html", pigeons=pigeons, pseudo=pseudo);
@@ -49,8 +49,8 @@ def login():
         return render_template("login.html");
 
 
-@app.route("/add_pigeon", methods=['POST', 'GET'])
-def add_pigeon():
+@app.route("/add-pigeon", methods=['POST', 'GET'])
+def addPigeon():
     if 'pseudo' not in session:
         return render_template("login.html");
     if request.method == 'POST' and 'pseudo' in session:
@@ -87,6 +87,18 @@ def loadMorePigeons():
         return jsonify(morePigeonsJson)
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+    
+@app.route("/change-bio", methods=['POST', 'GET'])
+def changeBio():
+    if 'pseudo' not in session:
+        return render_template("login.html")
+    if request.method == 'POST' and 'pseudo' in session:
+        newBio = request.form['bio']
+        model.changeBio(session['idUser'], newBio)
+        user = model.getUserbyPseudo(session['pseudo'])
+        return render_template("profile.html", user=user, lastPigeons=model.getLastPigeonsByUser(user['idUser'], 0), page=0)
+    else:
+        return render_template("profileEdit.html", user=model.getUserbyPseudo(session['pseudo']))
 
 
 if __name__ == "__main__":
