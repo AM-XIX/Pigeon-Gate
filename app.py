@@ -1,5 +1,4 @@
-from flask import Flask,request,render_template, jsonify,abort
-import random
+from flask import Flask,request,render_template, session
 import mysql.connector
 
 app = Flask(__name__)
@@ -49,13 +48,13 @@ def register():
         mycursor.execute("SELECT * FROM User WHERE pseudo = %s", (pseudo,))
         messageError = "Ce pseudo est déjà utilisé"
         if mycursor.fetchall():
-            print(typeProfilePicture)
             return render_template("register.html", messageError=messageError);
         if not pseudo or not password or not typeProfilePicture:
             message_error = "Tous les champs sont obligatoires."
             return render_template('register.html', messageError=message_error)
         mycursor.execute("INSERT INTO User (pseudo, password, typeProfilePicture) VALUES (%s, %s, %s)", (pseudo, password, typeProfilePicture))
         mydb.commit()
+        session['pseudo'] = pseudo
         return render_template("welcome.html", pigeons=pigeons, pseudo=pseudo);
     else:
         return render_template("register.html");
@@ -68,6 +67,7 @@ def login():
         mycursor.execute("SELECT * FROM User WHERE pseudo = %s AND password = %s", (pseudo, password))
         testLogin = mycursor.fetchall()
         if testLogin:
+            session['pseudo'] = pseudo
             return render_template("welcome.html", pigeons=pigeons, pseudo=pseudo);
         else:
             messageErrorLogin = "Pseudo ou mot de passe incorrect"
@@ -76,21 +76,27 @@ def login():
         return render_template("login.html");
 
 
-@app.route("/add_pigeon", methods=['POST'])
+@app.route("/add_pigeon", methods=['POST', 'GET'])
 def add_pigeon():
-    if request.method == 'POST':
+    if 'pseudo' not in session:
+        return render_template("login.html");
+    if request.method == 'POST' and 'pseudo' in session:
+        mycursor.execute("SELECT idUser FROM User WHERE pseudo = %s", session['pseudo'])
+        idUser = mycursor.fetchall()[0][0]
         prenom_pigeon = request.form['prenom']
         color_pigeon = request.form['couleur']
         place_pigeon = request.form['place']
-        originality = request.form['noteoriginalite']
-        walk = request.form['notewalk']
-        vibe = request.form['notevibe']
-        mycursor.execute("INSERT INTO Pigeon (prenomPigeon, Color, Place, rateOriginality, rateWalk, rateVibe ) VALUES (%s, %s, %s, %d, %d, %d)", (prenom_pigeon, color_pigeon, place_pigeon, originality, walk, vibe))
+        originality = int(request.form['noteoriginalite'])
+        walk = int(request.form['notewalk'])
+        vibe = int(request.form['notevibe']) 
+        url = request.form['urlPhoto']
+        sql = "INSERT INTO Pigeon (prenomPigeon, color, rateWalk, rateOriginality, rateVibe, place, urlPhoto, idUser) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
+        val = (prenom_pigeon, color_pigeon, walk, originality, vibe, place_pigeon, url, idUser)
+        mycursor.execute(sql, val)
         mydb.commit()
-        return render_template("new_pigeon.html");
+        return render_template("welcome.html", pigeons=pigeons);
     else:
         return render_template("new_pigeon.html");
-
 
 
 if __name__ == "__main__":
