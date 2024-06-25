@@ -25,12 +25,12 @@
     {% for pigeon in pigeons %}
     <div class="container">
       <div class="pigeon">
-        <img src="{{ pigeon[7] }}" alt="pigeon" style="width:100%">
+        <img src="{{ pigeon.urlPhoto }}" alt="pigeon" style="width:100%">
         <b>
-          <p>{{ pigeon[1] }}</p>
+          <p>{{ pigeon.prenomPigeon }}</p>
         </b>
-        <p>Couleur : {{ pigeon[2] }}</p>
-        <p>Looté à : {{ pigeon[4] }}</p>
+        <p>Couleur : {{ pigeon.color }}</p>
+        <p>Looté à : {{ pigeon.place }}</p>
       </div>
       {% endfor %}
     </div>
