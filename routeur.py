@@ -20,7 +20,7 @@ def register():
         password = request.form['password']
         typeProfilePicture = request.form['typeProfilePicture']
         model.getUserbyPseudo(pseudo)
-        if model.getUserbyPseudo(pseudo)==None:
+        if model.getUserbyPseudo(pseudo)!=None:
             messageErrorRegister = "Pseudo déjà utilisé"
             return render_template("register.html", messageErrorRegister=messageErrorRegister);
         else:

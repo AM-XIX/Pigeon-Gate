@@ -15,6 +15,21 @@ def getUserbyPseudo(pseudo):
     mycursor = mydb.cursor()
     mycursor.execute("SELECT * FROM User WHERE pseudo = %s", (pseudo,))
     userData = mycursor.fetchall()
+    if not userData:
+        return None
+    user = {
+        "idUser": userData[0][0],
+        "pseudo": userData[0][1],
+        "bio": userData[0][3],
+        "typeProfilePicture": userData[0][4],
+        "sommePigeons": sumAllPigeonsByUser(userData[0][0])
+    }
+    return user
+
+def getUserbyId(idUser):
+    mycursor = mydb.cursor()
+    mycursor.execute("SELECT * FROM User WHERE idUser = %s", (idUser,))
+    userData = mycursor.fetchall()
     user = {
         "idUser": userData[0][0],
         "pseudo": userData[0][1],
