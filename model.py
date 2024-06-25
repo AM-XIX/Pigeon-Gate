@@ -9,6 +9,8 @@ mydb = mysql.connector.connect(
     database="pigeon-gate",
 )
 
+pigeons = []
+
 def getAllPigeons():
     mycursor = mydb.cursor()
     mycursor.execute("SELECT * FROM Pigeon")
@@ -16,7 +18,6 @@ def getAllPigeons():
     return dataToPigeon(allPigeons)
 
 def dataToPigeon(datas):
-    pigeons = []
     for pigeon in datas:
         pigeon = {
             "idPigeon": pigeon[0],
