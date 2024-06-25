@@ -36,7 +36,15 @@ def dataToPigeon(datas):
 def getUserbyPseudo(pseudo):
     mycursor = mydb.cursor()
     mycursor.execute("SELECT * FROM User WHERE pseudo = %s", (pseudo,))
-    return mycursor.fetchall()
+    userData = mycursor.fetchall()
+    user = {
+        "idUser": userData[0][0],
+        "pseudo": userData[0][1],
+        "bio": userData[0][3],
+        "typeProfilePicture": userData[0][4],
+        "sommePigeons": sumAllPigeonsByUser(userData[0][0])
+    }
+    return user
 
 def addPigeon(prenomPigeon, color, rateWalk, rateVibe, rateOriginality, place, urlPhoto, idUser):
     mycursor = mydb.cursor()
@@ -58,3 +66,9 @@ def newUser(pseudo, password, typeProfilePicture):
     mycursor.execute("INSERT INTO User (pseudo, password, typeProfilePicture) VALUES (%s, %s, %s)", (pseudo, password, typeProfilePicture))
     mydb.commit()
     return True
+
+def sumAllPigeonsByUser(idUser):
+    mycursor = mydb.cursor()
+    mycursor.execute("SELECT COUNT(*) FROM Pigeon WHERE idUser = %s", (idUser,))
+    sumPigeons = mycursor.fetchone()
+    return sumPigeons[0]

@@ -20,7 +20,7 @@ def register():
         password = request.form['password']
         typeProfilePicture = request.form['typeProfilePicture']
         model.getUserbyPseudo(pseudo)
-        if model.getUserbyPseudo(pseudo):
+        if model.getUserbyPseudo(pseudo)==None:
             messageErrorRegister = "Pseudo déjà utilisé"
             return render_template("register.html", messageErrorRegister=messageErrorRegister);
         else:
@@ -32,7 +32,6 @@ def register():
 
 @app.route("/login", methods=['POST', 'GET'])
 def login():
-    print(session)
     if request.method == 'POST' and 'pseudo' not in session:
         pseudo = request.form['pseudo']
         password = request.form['password']
@@ -60,6 +59,13 @@ def add_pigeon():
 def logout():
     session.clear()
     return render_template("welcome.html", pigeons=pigeons);
+
+@app.route("/profil", methods=['POST', 'GET'])
+def profil():
+    if 'pseudo' not in session:
+        return render_template("login.html");
+    user = model.getUserbyPseudo(session['pseudo'])
+    return render_template("profile.html", user=user);
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", debug=True)

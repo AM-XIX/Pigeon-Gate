@@ -24,6 +24,7 @@
       <li><a href="{{ url_for('register') }}">S'inscrire</a></li>
       <li><a href="{{ url_for('login') }}">Se connecter</a></li>
       {% elif pseudo %}
+      <li><a href="{{ url_for('profil') }}">Mon profil</a></li>
       <li><a href="{{ url_for('logout') }}">Se déconnecter</a></li>
       {% endif %}
     </div>
