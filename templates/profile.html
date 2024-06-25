@@ -20,25 +20,14 @@
             <li><a href="">à propos</a></li>
         </div>
         <div>
-            {% if not pseudo %}
-            <li><a href="{{ url_for('register') }}">S'inscrire</a></li>
-            <li><a href="{{ url_for('login') }}">Se connecter</a></li>
-            {% elif pseudo %}
+            <img src="{{ url_for('static', filename='./images/' ~ user.typeProfilePicture ~ '.png') }}" alt="{{ user.typeProfilePicture }}" style="width:15%;">
+            <li>{{ user.pseudo }}</li>
             <li><a href="{{ url_for('logout') }}">Se déconnecter</a></li>
-            {% endif %}
         </div>
     </nav>
     <section>
         <h1>{{ user.pseudo }}</h1>
-        {% if user.typeProfilePicture == 'profile1' %}
-        <img src="{{ url_for('static', filename='./images/pp1.png') }}" alt="pp1" style="width:10%;">
-        {% elif user.typeProfilePicture == 'profile2' %}
-        <img src="{{ url_for('static', filename='./images/pp2.png') }}" alt="pp2" style="width:10%">
-        {% elif user.typeProfilePicture == 'profile3' %}
-        <img src="{{ url_for('static', filename='./images/pp3.png') }}" alt="pp3" style="width:10%">
-        {% elif user.typeProfilePicture == 'profile4' %}
-        <img src="{{ url_for('static', filename='./images/pp4.png') }}" alt="pp4" style="width:10%">
-        {% endif %}
+        <img src="{{ url_for('static', filename='./images/' ~ user.typeProfilePicture ~ '.png') }}" alt="{{ user.typeProfilePicture }}" style="width:10%;">
         <p> Biographie<br>{{ user.bio }} </p>
         <p>{{ user.sommePigeons }} pigeons postés</p>
 

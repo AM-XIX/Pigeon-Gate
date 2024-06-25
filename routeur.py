@@ -1,4 +1,4 @@
-from flask import Flask,request,render_template, session
+from flask import Flask,request,render_template, session, jsonify
 import model
 
 app = Flask(__name__)
@@ -74,6 +74,19 @@ def profil():
     page = request.args.get('page', default=0, type=int)
     lastPigeons = model.getLastPigeonsByUser(user['idUser'], page)
     return render_template("profile.html", user=user, lastPigeons=lastPigeons, page=page)
+
+@app.route("/loadMorePigeons", methods=['GET'])
+def loadMorePigeons():
+    if 'pseudo' not in session:
+        return render_template("login.html")
+    idUser = session['idUser']
+    page = request.args.get('page', default=0, type=int)
+    try:
+        morePigeons = model.getLastPigeonsByUser(idUser, page)
+        morePigeonsJson = [{"id": p['idPigeon'], "prenomPigeon": p['prenomPigeon'], "color": p['color'], "place": p['place'], "urlPhoto": p['urlPhoto']} for p in morePigeons]
+        return jsonify(morePigeonsJson)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 
 if __name__ == "__main__":
