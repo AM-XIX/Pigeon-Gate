@@ -10,7 +10,7 @@
 <body>
   <header>
 
-    <h1>Bienvenue sur Pigeon-Gate, {% if pseudo %}{{ pseudo }}{% else %}{% endif %} !</h1>
+    <h1>Bienvenue sur Pigeon-Gate {% if pseudo %},{{ pseudo }}{% else %}{% endif %} !</h1>
   </header>
 
   {% if not pseudo %}
@@ -25,7 +25,7 @@
     {% for pigeon in pigeons %}
     <div class="container">
       <div class="pigeon">
-        <img src="{{ pigeon[5] }}" alt="pigeon" style="width:100%">
+        <img src="{{ pigeon[7] }}" alt="pigeon" style="width:100%">
         <b>
           <p>{{ pigeon[1] }}</p>
         </b>
