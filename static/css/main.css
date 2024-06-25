@@ -1,22 +1,42 @@
-* {
-    justify-content: center;
-    text-align: center;
+@font-face {
+    font-family: DKCoolCrayon;
+    src: url(/static/fonts/DkCoolCrayon-xJyV.ttf);
+}
+
+@font-face {
+    font-family: DKNouveauCrayon;
+    src: url(/static/fonts/DkNouveauCrayonRegular-R2j6.otf);
+}
+
+:root {
+    --title:"DKCoolCrayon";
+    --text:"DKNouveauCrayon";
+    --primary:#FFF84C;
+    --secondary:#FE41B2;
+}
+
+body {
+    color:var(--secondary);
+    background-color: var(--primary);
+    font-family: var(--text);
+}
+
+h1, h2, h4 {
+    padding:0;
+    margin:0;
+}
+
+h1, h3 {
+    font-family: var(--title);
+}
+
+a {
+    text-decoration: none;
+    color:var(--secondary);
 }
 
 table,
 th,
 td {
     border: 1px solid;
-}
-  
-  img {
-    max-width: 10em;
-    max-height: 10em;
-    }
-
-.container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px;
 }
