@@ -13,7 +13,6 @@ mydb = mysql.connector.connect(
 )
 
 pigeons = [];
-
 mycursor = mydb.cursor()
 mycursor.execute("SELECT * FROM Pigeon")
 allPigeons = mycursor.fetchall()
@@ -21,7 +20,8 @@ allPigeons = mycursor.fetchall()
 @app.route("/", methods=['GET', 'POST'])
 def welcome():
     if mydb.is_connected():
-        return render_template("welcome.html", pigeons=allPigeons);
+        dataToPigeon(allPigeons)
+        return render_template("welcome.html", pigeons=pigeons);
 
 @app.route("/register", methods=['GET', 'POST'])
 def register():
@@ -39,7 +39,7 @@ def register():
             return render_template('register.html', messageError=message_error)
         mycursor.execute("INSERT INTO User (pseudo, password, typeProfilePicture) VALUES (%s, %s, %s)", (pseudo, password, typeProfilePicture))
         mydb.commit()
-        return render_template("welcome.html", pigeons=allPigeons, pseudo=pseudo);
+        return render_template("welcome.html", pigeons=pigeons, pseudo=pseudo);
     else:
         return render_template("register.html");
 
@@ -51,14 +51,29 @@ def login():
         mycursor.execute("SELECT * FROM User WHERE pseudo = %s AND password = %s", (pseudo, password))
         testLogin = mycursor.fetchall()
         if testLogin:
-            return render_template("welcome.html", pigeons=allPigeons, pseudo=pseudo);
+            return render_template("welcome.html", pigeons=pigeons, pseudo=pseudo);
         else:
             messageErrorLogin = "Pseudo ou mot de passe incorrect"
             return render_template("login.html", messageErrorLogin=messageErrorLogin);
     else:
         return render_template("login.html");
 
+def dataToPigeon(datas):
+    for pigeon in datas:
+        pigeon = {
+            "idPigeon": pigeon[0],
+            "prenomPigeon": pigeon[1],
+            "color": pigeon[2],
+            "rateWalk": pigeon[3],
+            "rateVibe": pigeon[4],
+            "rateOriginality": pigeon[5],
+            "place": pigeon[6],
+            "urlPhoto": pigeon[7],
+            "idUser": pigeon[7]
+        }    
+        pigeons.append(pigeon)
 
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", debug=True)
+
