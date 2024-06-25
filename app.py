@@ -5,10 +5,10 @@ import mysql.connector
 app = Flask(__name__)
 
 mydb = mysql.connector.connect(
-    port = 3306,
+    port = 8889,
     host="localhost",
     user="root",
-    password="",
+    password="root",
     database="pigeon-gate",
 )
 
@@ -16,11 +16,11 @@ pigeons = [];
 mycursor = mydb.cursor()
 mycursor.execute("SELECT * FROM Pigeon")
 allPigeons = mycursor.fetchall()
+dataToPigeon(allPigeons)
 
 @app.route("/", methods=['GET', 'POST'])
 def welcome():
     if mydb.is_connected():
-        dataToPigeon(allPigeons)
         return render_template("welcome.html", pigeons=pigeons);
 
 @app.route("/register", methods=['GET', 'POST'])
