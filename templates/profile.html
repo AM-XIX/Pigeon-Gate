@@ -3,44 +3,57 @@
 <html>
 
 <head>
-  <title>Profil</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='./css/main.css') }}">
-  <link rel="stylesheet" href="{{ url_for('static', filename='./css/welcome.css') }}">
+    <title>Profil</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='./css/main.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='./css/welcome.css') }}">
 </head>
 
 <body>
-  <header>
-    <h1>Pigeon Gate</h1>
-    <hr>
-  </header>
-  <nav>
-    <div>
-      <li><a href="">the pigeons</a></li>
-      <li><a href="">à propos</a></li>
-    </div>
-    <div>
-      {% if not pseudo %}
-      <li><a href="{{ url_for('register') }}">S'inscrire</a></li>
-      <li><a href="{{ url_for('login') }}">Se connecter</a></li>
-      {% elif pseudo %}
-      <li><a href="{{ url_for('logout') }}">Se déconnecter</a></li>
-      {% endif %}
-    </div>
-  </nav>
-  <section>
-    <h1>{{ user.pseudo }}</h1>
-    {% if user.typeProfilePicture == 'profile1' %}
-    <img src="{{ url_for('static', filename='./images/pp1.png') }}" alt="pp1" style="width:10%">
-    {% elif user.typeProfilePicture == 'profile2' %}
-    <img src="{{ url_for('static', filename='./images/pp2.png') }}" alt="pp2" style="width:10%">
-    {% elif user.typeProfilePicture == 'profile3' %}
-    <img src="{{ url_for('static', filename='./images/pp3.png') }}" alt="pp3" style="width:10%">
-    {% elif user.typeProfilePicture == 'profile4' %}
-    <img src="{{ url_for('static', filename='./images/pp4.png') }}" alt="pp4" style="width:10%">
-    {% endif %}
-    <p> Biographie<br>{{ user.bio }} </p>
-    <p>{{ user.sommePigeons }} pigeons postés</p>
-  </section>
+    <header>
+        <h1>Pigeon Gate</h1>
+        <hr>
+    </header>
+    <nav>
+        <div>
+            <li><a href="">the pigeons</a></li>
+            <li><a href="">à propos</a></li>
+        </div>
+        <div>
+            {% if not pseudo %}
+            <li><a href="{{ url_for('register') }}">S'inscrire</a></li>
+            <li><a href="{{ url_for('login') }}">Se connecter</a></li>
+            {% elif pseudo %}
+            <li><a href="{{ url_for('logout') }}">Se déconnecter</a></li>
+            {% endif %}
+        </div>
+    </nav>
+    <section>
+        <h1>{{ user.pseudo }}</h1>
+        {% if user.typeProfilePicture == 'profile1' %}
+        <img src="{{ url_for('static', filename='./images/pp1.png') }}" alt="pp1" style="width:10%">
+        {% elif user.typeProfilePicture == 'profile2' %}
+        <img src="{{ url_for('static', filename='./images/pp2.png') }}" alt="pp2" style="width:10%">
+        {% elif user.typeProfilePicture == 'profile3' %}
+        <img src="{{ url_for('static', filename='./images/pp3.png') }}" alt="pp3" style="width:10%">
+        {% elif user.typeProfilePicture == 'profile4' %}
+        <img src="{{ url_for('static', filename='./images/pp4.png') }}" alt="pp4" style="width:10%">
+        {% endif %}
+        <p> Biographie<br>{{ user.bio }} </p>
+        <p>{{ user.sommePigeons }} pigeons postés</p>
+
+        <div class="cards-container">
+            {% for lastPigeon in lastPigeons %}
+            <div class="pigeon-card">
+                <img src="{{ lastPigeon.urlPhoto }}" alt="" style="width:100%">
+                <b>
+                    <p class="pigeon-title">{{ lastPigeon.prenomPigeon }}</p>
+                </b>
+                <p><span>Couleur :</span> {{ lastPigeon.color }}</p>
+                <p><span>Looté à :</span> {{ lastPigeon.place }}</p>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
 
 </body>
 
