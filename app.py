@@ -5,10 +5,10 @@ import mysql.connector
 app = Flask(__name__)
 
 mydb = mysql.connector.connect(
-    port = 8889,
+    port = 3306,
     host="localhost",
     user="root",
-    password="root",
+    password="",
     database="pigeon-gate",
 )
 
@@ -72,6 +72,23 @@ def dataToPigeon(datas):
             "idUser": pigeon[7]
         }    
         pigeons.append(pigeon)
+
+
+@app.route("/add_pigeon", methods=['POST'])
+def add_pigeon():
+    if request.method == 'POST':
+        prenom_pigeon = request.form['prenom']
+        color_pigeon = request.form['couleur']
+        place_pigeon = request.form['place']
+        originality = request.form['noteoriginalite']
+        walk = request.form['notewalk']
+        vibe = request.form['notevibe']
+        mycursor.execute("INSERT INTO Pigeon (prenomPigeon, Color, Place, rateOriginality, rateWalk, rateVibe ) VALUES (%s, %s, %s, %d, %d, %d)", (prenom_pigeon, color_pigeon, place_pigeon, originality, walk, vibe))
+        mydb.commit()
+        return render_template("new_pigeon.html");
+    else:
+        return render_template("new_pigeon.html");
+
 
 
 if __name__ == "__main__":

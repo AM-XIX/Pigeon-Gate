@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajouter un pigeon</title>
+</head>
+
+<body>
+    <h1>Ajouter un pigeon! </h1>
+    <form action="/add_pigeon" method="post">
+        <label for="prenom">Prénom</label><br>
+        <input type="text" name="prenom" id="prenom" required><br>
+
+        <label for="couleur">Couleur</label><br>
+        <input type="texte" name="couleur" id="couleur" required><br>
+
+        <label for="place">Où a-t-il été aperçu?</label><br>
+        <input type="texte" name="place" id="place" required><br>
+
+        <p>Note son originalité:</p>
+        <input type="radio" id="1" name="noteoriginate" value="1">
+        <label for="1">1</label>
+        <input type="radio" id="2" name="noteoriginate" value="2">
+        <label for="2">2</label>
+        <input type="radio" id="3" name="noteoriginate" value="3">
+        <label for="3">3</label>
+        <input type="radio" id="4" name="noteoriginate" value="4">
+        <label for="4">4</label>
+        <input type="radio" id="5" name="noteoriginate" value="5">
+        <label for="5">5</label>
+
+        <p>Note sa démarche:</p>
+        <input type="radio" id="1" name="notewalk" value="1">
+        <label for="1">1</label>
+        <input type="radio" id="2" name="notewalk" value="2">
+        <label for="2">2</label>
+        <input type="radio" id="3" name="notewalk" value="3">
+        <label for="3">3</label>
+        <input type="radio" id="4" name="notewalk" value="4">
+        <label for="4">4</label>
+        <input type="radio" id="5" name="notewalk" value="5">
+        <label for="5">5</label>
+
+        <p>Note sa vibe:</p>
+        <input type="radio" id="1" name="notevibe" value="1">
+        <label for="1">1</label>
+        <input type="radio" id="2" name="notevibe" value="2">
+        <label for="2">2</label>
+        <input type="radio" id="3" name="notevibe" value="3">
+        <label for="3">3</label>
+        <input type="radio" id="4" name="notevibe" value="4">
+        <label for="4">4</label>
+        <input type="radio" id="5" name="notevibe" value="5">
+        <label for="5">5</label>
+
+        <!-- <p>A quelle catégorie appartient-il?</p>
+        <input type="checkbox" id="cat1" name="cat1" value="Estropié">
+        <label for="cat1">Estropié</label><br>
+        <input type="checkbox" id="cat2" name="cat2" value="Pride">
+        <label for="cat2">Pride</label><br>
+        <input type="checkbox" id="cat3" name="cat3" value="Punk">
+        <label for="cat3">Punk</label><br><br>
+     -->
+        <br>
+
+        <input type="submit" value="Poster un pigeon">
+
+        <br>
+        
+    </form>
+</body>
+
+</html>
