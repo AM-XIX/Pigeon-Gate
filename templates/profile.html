@@ -6,6 +6,7 @@
     <title>Profil</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='./css/main.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='./css/welcome.css') }}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 
 <body>
@@ -30,7 +31,7 @@
     <section>
         <h1>{{ user.pseudo }}</h1>
         {% if user.typeProfilePicture == 'profile1' %}
-        <img src="{{ url_for('static', filename='./images/pp1.png') }}" alt="pp1" style="width:10%">
+        <img src="{{ url_for('static', filename='./images/pp1.png') }}" alt="pp1" style="width:10%;">
         {% elif user.typeProfilePicture == 'profile2' %}
         <img src="{{ url_for('static', filename='./images/pp2.png') }}" alt="pp2" style="width:10%">
         {% elif user.typeProfilePicture == 'profile3' %}
@@ -41,6 +42,7 @@
         <p> Biographie<br>{{ user.bio }} </p>
         <p>{{ user.sommePigeons }} pigeons postés</p>
 
+        <h3>Les derniers pigeons postés</h3>
         <div class="cards-container">
             {% for lastPigeon in lastPigeons %}
             <div class="pigeon-card">
@@ -54,6 +56,37 @@
             {% endfor %}
         </div>
     </section>
+
+    <button id="load-more" data-page="{{ page + 1 }}">Load More</button>
+
+    <script>
+        $(document).ready(function () {
+            $('#load-more').click(function () {
+                var userId = {{ user['idUser'] }};
+                var nextPage = $(this).data('page');
+        
+                $.ajax({
+                    url: '/loadMorePigeons',
+                    type: 'GET',
+                    data: {
+                        user_id: userId,
+                        page: nextPage
+                    },
+                    success: function (data) {
+                        if (data.length > 0) {
+                            $.each(data, function (index, pigeon) {
+                                $('.cards-container').append('<div class="pigeon-card"><img src="' + pigeon.urlPhoto + '" alt="" style="width:100%"><b><p class="pigeon-title">' + pigeon.prenomPigeon + '</p></b><p><span>Couleur :</span> ' + pigeon.color + '</p><p><span>Looté à :</span> ' + pigeon.place + '</p></div>');
+                            });
+                            $('#load-more').data('page', nextPage + 1);
+                        } else {
+                            $('#load-more').hide();
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+    
 
 </body>
 
