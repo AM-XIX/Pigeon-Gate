@@ -159,3 +159,7 @@ footer p {
     font-weight:bold;
     letter-spacing: 1px;
 }
+
+footer a {
+    color:white;
+}
