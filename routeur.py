@@ -111,13 +111,16 @@ def editProfile():
         if 'typeProfilePicture' in request.form:
             newPP = request.form['typeProfilePicture']
             model.changeProfilePicture(session['idUser'], newPP)
+            otherProfilePicture.remove(newPP)
         if 'bio' in request.form:
             newBio = request.form['bio']
             model.changeBio(session['idUser'], newBio)
         user = model.getUserbyPseudo(session['pseudo'])
         lastPigeons = model.getLastPigeonsByUser(user['idUser'], 0)
         page = request.args.get('page', default=0, type=int)
-        return render_template("profile.html", user=user, lastPigeons=lastPigeons, page=page, otherProfilePicture=otherProfilePicture)
+        return render_template("profileEdit.html", user=user, lastPigeons=lastPigeons, page=page, otherProfilePicture=otherProfilePicture)
+    currentProfilePicture = user['typeProfilePicture']
+    otherProfilePicture = [pic for pic in otherProfilePicture if pic != currentProfilePicture]
     return render_template("profileEdit.html", user=user, otherProfilePicture=otherProfilePicture)
 
 @app.route("/galery", methods=['GET'])
