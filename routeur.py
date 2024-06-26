@@ -15,6 +15,12 @@ def welcome():
         pigeonsBdd = model.getAllPigeons()
         return render_template("welcome.html", pigeons=pigeonsBdd);
 
+@app.route("/accueil", methods=['GET', 'POST'])
+def accueil():
+    if model.mydb.is_connected():
+        pigeonsBdd = model.getAllPigeons()
+        return render_template("welcome.html", pigeons=pigeonsBdd);
+
 @app.route("/register", methods=['GET', 'POST'])
 def register():
     if request.method == 'POST' and 'pseudo' not in session:
@@ -73,12 +79,14 @@ def logout():
 
 @app.route("/profil", methods=['POST', 'GET'])
 def profil():
+    otherProfilePicture = ['profile1', 'profile2', 'profile3', 'profile4']
     if 'pseudo' not in session:
         return render_template("login.html") 
     user = model.getUserbyPseudo(session['pseudo'])
+    otherProfilePicture.remove(user['typeProfilePicture'])
     page = request.args.get('page', default=0, type=int)
     lastPigeons = model.getLastPigeonsByUser(user['idUser'], page)
-    return render_template("profile.html", user=user, lastPigeons=lastPigeons, page=page)
+    return render_template("profile.html", user=user, lastPigeons=lastPigeons, page=page, otherProfilePicture=otherProfilePicture)
 
 @app.route("/loadMorePigeons", methods=['GET'])
 def loadMorePigeons():
@@ -95,16 +103,17 @@ def loadMorePigeons():
     
 @app.route("/change-bio", methods=['POST', 'GET'])
 def changeBio():
+    otherProfilePicture = ['profile1', 'profile2', 'profile3', 'profile4']
     if 'pseudo' not in session:
         return render_template("login.html")
     if request.method == 'POST' and 'pseudo' in session:
         newBio = request.form['bio']
         model.changeBio(session['idUser'], newBio)
         user = model.getUserbyPseudo(session['pseudo'])
-        return render_template("profile.html", user=user, lastPigeons=model.getLastPigeonsByUser(user['idUser'], 0), page=0)
+        otherProfilePicture.remove(user['typeProfilePicture'])
+        return render_template("profile.html", user=user, lastPigeons=model.getLastPigeonsByUser(user['idUser'], 0), page=0, otherProfilePicture=otherProfilePicture)
     else:
         return render_template("profileEdit.html", user=model.getUserbyPseudo(session['pseudo']))
-
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", debug=True)

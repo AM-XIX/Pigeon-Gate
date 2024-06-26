@@ -28,7 +28,12 @@
     </nav>
     <section>
         <h1>{{ user.pseudo }}</h1>
-        <img src="{{ url_for('static', filename='./images/' ~ user.typeProfilePicture ~ '.png') }}" alt="{{ user.typeProfilePicture }}" style="width:10%;">
+
+        <img src="{{ url_for('static', filename='images/' + user.typeProfilePicture + '.png') }}" alt="{{ user.typeProfilePicture }}" style="width:10%;">
+        {% for profile in otherProfilePicture %}
+        <img src="{{ url_for('static', filename='images/' + profile + '.png') }}" alt="{{ profile }}" style="width:5%;">
+        {% endfor %}
+
         <p> Biographie<br>{{ user.bio }} </p>
         <u><a href="{{ url_for('changeBio') }}">Modifier</a></u>
         <p>{{ user.sommePigeons }} pigeons postés</p>

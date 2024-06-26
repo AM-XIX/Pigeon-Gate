@@ -66,6 +66,14 @@ def changeBio(idUser, newBio):
     mycursor.execute("UPDATE User SET bio = %s WHERE idUser = %s", (newBio, idUser))
     mydb.commit()
 
+def changeProfilePicture(idUser, newTypeProfilePicture):
+    mycursor = mydb.cursor()
+    mycursor.execute("UPDATE User SET typeProfilePicture = %s WHERE idUser = %s", (newTypeProfilePicture, idUser))
+    mydb.commit()
+
+
+## Pigeon
+
 def sumAllPigeonsByUser(idUser):
     mycursor = mydb.cursor()
     mycursor.execute("SELECT COUNT(*) FROM Pigeon WHERE idUser = %s", (idUser,))
@@ -73,9 +81,6 @@ def sumAllPigeonsByUser(idUser):
     if not sumPigeons:
         return 0
     return sumPigeons[0]
-
-
-## Pigeon
 
 def getAllPigeons():
     mycursor = mydb.cursor()

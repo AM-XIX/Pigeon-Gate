@@ -30,6 +30,7 @@
         <h1>{{ user.pseudo }}</h1>
         <img src="{{ url_for('static', filename='./images/' ~ user.typeProfilePicture ~ '.png') }}"
             alt="{{ user.typeProfilePicture }}" style="width:10%;">
+        
         <p>Biographie</p>
         <form action="{{ url_for('changeBio') }}" method="post">
             <textarea id="bio" name="bio">{{ user.bio }}</textarea>
