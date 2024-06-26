@@ -10,25 +10,25 @@
 
 <body>
   <header>
-    <h1>Pigeon Gate</h1>
+    <h1><a href="{{ url_for('welcome') }}">Pigeon Gate</a></h1>
     <h2>Bienvenue sur Pigeon-Gate{% if pseudo %}, {{ pseudo }}{% else %}{% endif %} !</h2>
     <hr>
-  </header>
-  <nav>
+</header>
+<nav>
     <div>
-      <li><a href="">the pigeons</a></li>
-      <li><a href="">à propos</a></li>
+        <li><a href="">the pigeons</a></li>
+        <li><a href="">à propos</a></li>
     </div>
     <div>
-      {% if not pseudo %}
-      <li><a href="{{ url_for('register') }}">S'inscrire</a></li>
-      <li><a href="{{ url_for('login') }}">Se connecter</a></li>
-      {% elif pseudo %}
-      <li><a href="{{ url_for('profil') }}">Mon profil</a></li>
-      <li><a href="{{ url_for('logout') }}">Se déconnecter</a></li>
-      {% endif %}
+        {% if not pseudo %}
+        <li><a href="{{ url_for('register') }}">S'inscrire</a></li>
+        <li><a href="{{ url_for('login') }}">Se connecter</a></li>
+        {% elif pseudo %}
+        <li><a href="{{ url_for('profil') }}">Mon profil</a></li>
+        <li><a href="{{ url_for('logout') }}">Se déconnecter</a></li>
+        {% endif %}
     </div>
-  </nav>
+</nav>
 
   <section id="trending">
     <div id="trending-header">

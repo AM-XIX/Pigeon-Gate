@@ -5,12 +5,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>S'inscrire</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='./css/main.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='./css/register.css') }}">
 </head>
 
 <body>
+    <header>
+        <h1><a href="{{ url_for('welcome') }}">Pigeon Gate</a></h1>
+        <h2>Bienvenue sur Pigeon-Gate{% if pseudo %}, {{ pseudo }}{% else %}{% endif %} !</h2>
+        <hr>
+    </header>
+    <nav>
+        <div>
+            <li><a href="">the pigeons</a></li>
+            <li><a href="">à propos</a></li>
+        </div>
+        <div>
+            {% if not pseudo %}
+            <li><a href="{{ url_for('register') }}" class="active-page">S'inscrire</a></li>
+            <li><a href="{{ url_for('login') }}">Se connecter</a></li>
+            {% elif pseudo %}
+            <li><a href="{{ url_for('profil') }}">Mon profil</a></li>
+            <li><a href="{{ url_for('logout') }}">Se déconnecter</a></li>
+            {% endif %}
+        </div>
+    </nav>
     {% if messageErrorRegister %}
     <p style="color: red;">{{ messageErrorRegister }}</p>
     {% endif %}
+    <section>
     <h1>REJOINS LE CLUB</h1>
     <form action="/register" method="post">
         <label for="pseudo">Pseudo</label><br>
@@ -23,7 +46,7 @@
             <legend>Votre Avatar</legend>
             <div>
                 <label for="pp1">
-                    <input type="radio" id="pp1" name="typeProfilePicture" value="profile1"/>
+                    <input type="radio" id="pp1" name="typeProfilePicture" value="profile1" />
                     <img src="./static/images/pp1.png" alt="pp1" style="width:10%">
                 </label>
             </div>
@@ -49,13 +72,19 @@
                 </label>
             </div>
         </fieldset>
-
-
+        
         <input type="submit" value="S'inscrire">
 
         <br>
         <a href="/login">Se connecter</a>
     </form>
+    </section>
+    <a id="back-top" href="#top">&uarr; Revenir en haut &uarr;</a>
+    <footer>
+      <p>The Pigeon Team</p>
+      <p>Pigeon Gate™</p>
+      <p>IMAC 2024 ©</p>
+    </footer>
 </body>
 
 </html>
