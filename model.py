@@ -183,3 +183,8 @@ def addComment(textCom, idUser, idPigeon):
     mycursor.execute("INSERT INTO commentaire (textCom, nbLike, idUser, idPigeon) VALUES (%s, %s, %s, %s)", (textCom, 0, idUser, idPigeon))
     mydb.commit()
 
+def getFourRandomPigeons(currentIdPigeon):
+    mycursor = mydb.cursor()
+    mycursor.execute("SELECT * FROM Pigeon WHERE idPigeon != %s ORDER BY RAND() LIMIT 4", (currentIdPigeon,))
+    fourRandomPigeons = mycursor.fetchall()
+    return dataToPigeon(fourRandomPigeons)
