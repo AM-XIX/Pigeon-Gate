@@ -120,6 +120,15 @@ def editProfile():
         return render_template("profile.html", user=user, lastPigeons=lastPigeons, page=page, otherProfilePicture=otherProfilePicture)
     return render_template("profileEdit.html", user=user, otherProfilePicture=otherProfilePicture)
 
+@app.route("/galery", methods=['GET'])
+def galery():
+    pigeonsBdd = model.getAllPigeons()
+    return render_template("welcome.html", pigeons=pigeonsBdd);
+
+@app.route("/about", methods=['GET'])
+def about():
+    pigeonsBdd = model.getAllPigeons()
+    return render_template("welcome.html", pigeons=pigeonsBdd);
 
 
 if __name__ == "__main__":
