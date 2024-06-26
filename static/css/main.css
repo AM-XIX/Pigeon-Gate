@@ -114,6 +114,23 @@ nav a:hover {
     text-decoration: underline;
 }
 
+/* ------ BUTTONS ------ */
+#trending-header a, #principe a, input[type="submit"] {
+    padding:.8vw 2vw;
+    border:4px solid var(--secondary);
+    border-radius:10px;
+    font-family: var(--title);
+    font-weight:bold;
+    font-size:1.1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+#trending-header a:hover, #principe a:hover, input[type="submit"]:hover {
+    background-color: var(--secondary);
+    color:white;
+}
+
 /* ====== BACK TO TOP ====== */
 #back-top {
     display:block;

@@ -1,0 +1,110 @@
+h3 {
+    margin: 0;
+    margin-top: 7vh;
+    font-size: 3.2rem;
+}
+
+.subtext {
+    margin-top: 0;
+    font-size: 1.5rem;
+}
+
+#join-container {
+    display: flex;
+}
+
+img:first-child {
+    height: 40vh;
+    border: 3px solid var(--secondary);
+    transform: rotate(-3deg);
+}
+
+/* ====== FORM : GENERAL ====== */
+form {
+    margin-top: -4vh;
+    margin-left: 4vw;
+}
+
+label {
+    display: block;
+    margin: 0;
+    margin-top: 2vh;
+    font-size: 1.7rem;
+}
+
+input {
+    display: block;
+    margin-top: -1.5vh;
+    background-color: transparent;
+    padding: 1.5vh 4vw 1.5vh 1vw;
+    border: 2px solid var(--secondary);
+    border-radius: 5px;
+    color: var(--secondary);
+}
+
+input:focus {
+    outline:0;
+    border:3px solid var(--secondary);
+    box-shadow:4px 4px 0px var(--secondary);
+}
+
+::placeholder {
+    color: var(--secondary);
+    opacity: 1;
+    /* Firefox */
+}
+
+::-ms-input-placeholder {
+    /* Edge 12 -18 */
+    color: var(--secondary);
+}
+
+/* ====== PROFILE PICTURE SELECTION ====== */
+#radio-container {
+    display: flex;
+}
+
+#radio-container label {
+    margin-right:1vw;
+}
+
+[type=radio] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+[type=radio]+img {
+    margin-top:1vh;
+    border:4px solid white;
+    box-sizing: border-box;
+    cursor: pointer;
+    transition:.1s ease-out;
+}
+
+[type=radio]+img:hover {
+    margin-top:-1vh;
+    border:3px solid var(--secondary);
+}
+
+[type=radio]:checked+img {
+    margin-top:-1vh;
+    border:6px solid var(--secondary);
+}
+
+.radio-option {
+    width: 10vw;
+}
+
+input[type="submit"] {
+    margin-top: 4vh;
+    padding: .5vw 1.5vw;
+    background-color: transparent;
+    color: var(--secondary);
+    cursor: pointer;
+}
+
+input[type="submit"]:hover {
+    transform: rotate(-2deg);
+}
