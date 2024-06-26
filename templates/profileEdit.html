@@ -28,10 +28,10 @@
     </nav>
     <section>
         <form action="{{ url_for('editProfile') }}" method="post">
-            <p>Pseudo</p>
-            <textarea id="pseudo" name="pseudo">{{ user.pseudo }}</textarea>
-            <p>Biographie</p>
-            <textarea id="bio" name="bio">{{ user.bio }}</textarea><br>
+        <p>Pseudo</p>
+        <textarea id="pseudo" name="pseudo">{{ user.pseudo }}</textarea>
+        <p>Biographie</p>
+            <textarea id="bio" name="bio">{{ user.bio }}</textarea>
             <input type="submit" value="Modifier">
         </form>
         <img src="{{ url_for('static', filename='./images/' ~ user.typeProfilePicture ~ '.png') }}"
@@ -46,7 +46,7 @@
         </form>
         {% endfor %}
 
-
+        
     </section>
 
 </body>

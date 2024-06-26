@@ -134,3 +134,52 @@ def getLastPigeonsByUser(idUser, page):
     mycursor.execute(query, (idUser, limit, offset))
     lastPigeons = mycursor.fetchall()
     return dataToPigeon(lastPigeons)
+
+def getCardPigeonsById(idPigeon):
+    mycursor = mydb.cursor()
+    query = "SELECT * FROM Pigeon WHERE idPigeon = %s";
+    mycursor.execute(query, (idPigeon,))
+    cardPigeons = mycursor.fetchone()
+    pigeon = {
+        "idPigeon": cardPigeons[0],
+        "prenomPigeon": cardPigeons[1],
+        "color": cardPigeons[2],
+        "rateWalk": cardPigeons[3],
+        "rateVibe": cardPigeons[4],
+        "rateOriginality": cardPigeons[5],
+        "place": cardPigeons[6],
+        "urlPhoto": cardPigeons[7],
+        "idUser": cardPigeons[8]
+    }
+    return pigeon
+
+
+# Comment
+
+def dataToComment(datas, pseudoUser):
+    comments = []
+    for comment in datas:
+        comment = {
+            "idComment": comment[0],
+            "textCom": comment[1],
+            "nbLike": comment[2],
+            "idUser": comment[3],
+            "idPigeon": comment[4],
+            "pseudoUser": pseudoUser,
+        }
+        comments.append(comment)
+    return comments
+
+def getCommentsByIdPigeon(idPigeon, idUser):
+    mycursor = mydb.cursor()
+    query = "SELECT * FROM commentaire WHERE idPigeon = %s";
+    mycursor.execute(query, (idPigeon,))
+    comments = mycursor.fetchall()
+    user = getUserbyId(idUser)
+    return dataToComment(comments, user['pseudo'])
+
+def addComment(textCom, idUser, idPigeon):
+    mycursor = mydb.cursor()
+    mycursor.execute("INSERT INTO commentaire (textCom, nbLike, idUser, idPigeon) VALUES (%s, %s, %s, %s)", (textCom, 0, idUser, idPigeon))
+    mydb.commit()
+

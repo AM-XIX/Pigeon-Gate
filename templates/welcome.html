@@ -39,6 +39,7 @@
 
     <div class="cards-container">
       {% for pigeon in pigeons %}
+      <a href="{{ url_for('cardPigeon', idPigeon=pigeon.idPigeon) }}" class="pigeon-card-link">
       <div class="pigeon-card">
         <img src="{{ pigeon.urlPhoto }}" alt="" style="width:100%">
         <b>
@@ -47,6 +48,7 @@
         <p><span>Couleur :</span> {{ pigeon.color }}</p>
         <p><span>Looté à :</span> {{ pigeon.place }}</p>
       </div>
+    </a>
       {% endfor %}
     </div>
   </section>

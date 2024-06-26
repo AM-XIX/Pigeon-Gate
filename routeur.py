@@ -32,9 +32,9 @@ def register():
             return render_template("register.html", messageErrorRegister=messageErrorRegister);
         else:
             session['pseudo'] = pseudo
-            session['idUser'] = int(model.getUserbyPseudo(pseudo)['idUser'])
             model.newUser(pseudo, password, typeProfilePicture)
             pigeonsBdd = model.getAllPigeons()
+            session['idUser'] = model.getUserbyPseudo(pseudo)['idUser']
             return render_template("welcome.html", pigeons=pigeonsBdd, pseudo=pseudo);
     else:
         return render_template("register.html");
@@ -137,9 +137,24 @@ def galery():
 
 @app.route("/about", methods=['GET'])
 def about():
-    pigeonsBdd = model.getAllPigeons()
-    return render_template("welcome.html", pigeons=pigeonsBdd);
+    pigeonBdd = model.getCardPigeonsById()
+    return render_template("cardPigeon.html", pigeon=pigeonBdd);
 
+@app.route("/pigeon/<idPigeon>", methods=['GET'])
+def cardPigeon(idPigeon):
+    pigeon = model.getCardPigeonsById(idPigeon)
+    user = model.getUserbyId(pigeon['idUser'])
+    comments = model.getCommentsByIdPigeon(idPigeon, user['idUser'])
+    return render_template("cardPigeon.html", pigeon=pigeon, user=user, comments=comments);
+
+@app.route("/pigeon/<int:idPigeon>/comment", methods=['POST'])
+def addComment(idPigeon):
+    if 'idUser' not in session:
+        return redirect(url_for('login'))
+    textCom = request.form.get('comment')
+    idUser = session['idUser']
+    model.addComment(textCom, idUser, idPigeon)
+    return redirect(url_for('cardPigeon', idPigeon=idPigeon))
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", debug=True)

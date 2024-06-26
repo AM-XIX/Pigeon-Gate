@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+
+<html lang="fr">
+
+<head>
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='./images/favicon.ico') }}">
+    <title>Profil</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='./css/main.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='./css/welcome.css') }}">
+</head>
+
+<body>
+    <header>
+        <h1>Pigeon Gate</h1>
+        <hr>
+    </header>
+    <nav>
+        <div>
+            <li><a href="{{ url_for('galery') }}">the pigeons</a></li>
+            <li><a href="{{ url_for('about') }}">à propos</a></li>
+        </div>
+        <div>
+            {% if not pseudo %}
+            <li><a href="{{ url_for('register') }}">S'inscrire</a></li>
+            <li><a href="{{ url_for('login') }}">Se connecter</a></li>
+            {% elif pseudo %}
+            <li><a href="{{ url_for('profil') }}">Mon profil</a></li>
+            <li><a href="{{ url_for('logout') }}">Se déconnecter</a></li>
+            {% endif %}
+        </div>
+    </nav>
+    <section>
+        <img src="{{ pigeon.urlPhoto }}" alt="" style="width:30%">
+        <h1>{{ pigeon.prenomPigeon }} - {{ pigeon.place }}</h1>
+        <p>Adopté par : {{ user.pseudo }}</p>
+        <p>Originalité : {{ pigeon.rateOriginality }}</p>
+        <p>Démarche : {{ pigeon.rateWalk }}</p>
+        <p>Vibe : {{ pigeon.rateVibe }}</p>
+        <a href="">Noter le pigeon</a>
+
+        <form action="" method="post">
+            <p>Originalité:</p>
+            <input type="radio" id="1" name="noteoriginalite" value="1">
+            <label for="1">1</label>
+            <input type="radio" id="2" name="noteoriginalite" value="2">
+            <label for="2">2</label>
+            <input type="radio" id="3" name="noteoriginalite" value="3">
+            <label for="3">3</label>
+            <input type="radio" id="4" name="noteoriginalite" value="4">
+            <label for="4">4</label>
+            <input type="radio" id="5" name="noteoriginalite" value="5">
+            <label for="5">5</label>
+
+            <p>Démarche:</p>
+            <input type="radio" id="1" name="notewalk" value="1">
+            <label for="1">1</label>
+            <input type="radio" id="2" name="notewalk" value="2">
+            <label for="2">2</label>
+            <input type="radio" id="3" name="notewalk" value="3">
+            <label for="3">3</label>
+            <input type="radio" id="4" name="notewalk" value="4">
+            <label for="4">4</label>
+            <input type="radio" id="5" name="notewalk" value="5">
+            <label for="5">5</label>
+
+            <p>Vibe:</p>
+            <input type="radio" id="1" name="notevibe" value="1">
+            <label for="1">1</label>
+            <input type="radio" id="2" name="notevibe" value="2">
+            <label for="2">2</label>
+            <input type="radio" id="3" name="notevibe" value="3">
+            <label for="3">3</label>
+            <input type="radio" id="4" name="notevibe" value="4">
+            <label for="4">4</label>
+            <input type="radio" id="5" name="notevibe" value="5">
+            <label for="5">5</label>
+            <input type="submit" value="Valider">
+        </form>
+
+        <div>
+            <h2>Derniers commentaires</h2>
+            <div>
+                {% for comment in comments %}
+                <p>{{ comment.pseudoUser }}</p>
+                <p>{{ comment.textCom }}</p>
+                <p>Like : {{ comment.nbLike }}</p>
+                {% endfor %}
+            </div>
+            <h2>Commenter</h2>
+            <form action="/pigeon/{{ pigeon.idPigeon }}/comment" method="post">
+                <textarea name="comment" id="comment" cols="30" rows="10"></textarea>
+                <input type="submit" value="Poster">
+            </form>
+        </div>
+
+        <div>
+            <h2>Voir d'autres pigeons</h2>
+            <div>
+                <a href="">Pigeon 1</a>
+                <a href="">Pigeon 2</a>
+                <a href="">Pigeon 3</a>
+            </div>
+            <a href="">EXPLORER</a>
+        </div>
+    </section>
+    <a id="back-top" href="#top">&uarr; Revenir en haut &uarr;</a>
+
+</body>
+
+</html>
