@@ -1,7 +1,9 @@
 from flask import Flask,request,render_template, session, jsonify
+from flask_bcrypt import Bcrypt
 import model
 
 app = Flask(__name__)
+bcrypt = Bcrypt(app)
 
 app.config.from_object('config.Config')
 
@@ -17,9 +19,8 @@ def welcome():
 def register():
     if request.method == 'POST' and 'pseudo' not in session:
         pseudo = request.form['pseudo']
-        password = request.form['password']
+        password = bcrypt.generate_password_hash(request.form['password']).decode('utf-8')
         typeProfilePicture = request.form['typeProfilePicture']
-        model.getUserbyPseudo(pseudo)
         if model.getUserbyPseudo(pseudo)!=None:
             messageErrorRegister = "Pseudo déjà utilisé"
             return render_template("register.html", messageErrorRegister=messageErrorRegister);

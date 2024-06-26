@@ -1,4 +1,5 @@
 from flask import Flask,request,render_template, session
+from flask_bcrypt import Bcrypt
 import mysql.connector
 
 mydb = mysql.connector.connect(
@@ -41,9 +42,14 @@ def getUserbyId(idUser):
 
 def checkLogin(pseudo, password):
     mycursor = mydb.cursor()
-    mycursor.execute("SELECT * FROM User WHERE pseudo = %s AND password = %s", (pseudo, password))
-    testLogin = mycursor.fetchall()
-    return testLogin
+    mycursor.execute("SELECT * FROM User WHERE pseudo = %s", (pseudo,))
+    user = mycursor.fetchone()
+    if user == None:
+        return False
+    hashed_password = user[2]
+    if Bcrypt().check_password_hash(hashed_password, password):
+        return True
+    return False
 
 def newUser(pseudo, password, typeProfilePicture):
     if not pseudo or not password or not typeProfilePicture:

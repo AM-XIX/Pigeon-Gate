@@ -29,6 +29,7 @@
         <h1>{{ user.pseudo }}</h1>
         <img src="{{ url_for('static', filename='./images/' ~ user.typeProfilePicture ~ '.png') }}" alt="{{ user.typeProfilePicture }}" style="width:10%;">
         <p> Biographie<br>{{ user.bio }} </p>
+        <u><a href="{{ url_for('changeBio') }}">Modifier</a></u>
         <p>{{ user.sommePigeons }} pigeons postés</p>
 
         <h3>Les derniers pigeons postés</h3>
