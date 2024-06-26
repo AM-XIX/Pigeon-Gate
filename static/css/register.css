@@ -36,7 +36,7 @@ input {
     display: block;
     margin-top: -1.5vh;
     background-color: transparent;
-    padding: 1.5vh 4vw 1.5vh 1vw;
+    padding: 1.5vh 6vw 1.5vh 1vw;
     border: 2px solid var(--secondary);
     border-radius: 5px;
     color: var(--secondary);
@@ -99,6 +99,7 @@ input:focus {
 
 input[type="submit"] {
     margin-top: 4vh;
+    margin-right:1vw;
     padding: .5vw 1.5vw;
     background-color: transparent;
     color: var(--secondary);
@@ -107,4 +108,17 @@ input[type="submit"] {
 
 input[type="submit"]:hover {
     transform: rotate(-2deg);
+}
+
+#join-or-log {
+    display:flex;
+    align-items: baseline;
+}
+
+#join-or-log p {
+    font-size:1.3rem;
+}
+
+#join-or-log a {
+    text-decoration: underline;
 }
