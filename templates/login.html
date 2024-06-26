@@ -31,14 +31,17 @@
             {% endif %}
         </div>
     </nav>
-    {% if messageErrorRegister %}
-    <p style="color: red;">{{ messageErrorRegister }}</p>
+    {% if messageErrorLogin %}
+    <p style="color: red;">{{ messageErrorLogin }}</p>
     {% endif %}
     <section>
         <h3>Connecte toi !</h3>
         <p class="subtext">Nous sommes ravis de te retrouver, adepte de pigeons !</p>
         <div id="join-container">
             <img src="https://images7.memedroid.com/images/UPLOADED295/65bb66a6876c0.jpeg" alt="">
+            {% if messageErrorRegister %}
+            <p style="color: red;">{{ messageErrorRegister }}</p>
+            {% endif %}
             <form id="login-form" action="/login" method="POST">
                 <label for="pseudo">Pseudo</label><br>
                 <input type="text" name="pseudo" id="pseudo" placeholder="Ton magnifique pseudo..." required><br>

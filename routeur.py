@@ -49,8 +49,11 @@ def login():
             session['pseudo'] = pseudo
             pigeonsBdd = model.getAllPigeons()
             return render_template("welcome.html", pigeons=pigeonsBdd, pseudo=pseudo);
-        else:
+        elif model.getUserbyPseudo(pseudo)==None:
             messageErrorLogin = "Pseudo ou mot de passe incorrect"
+            return render_template("login.html", messageErrorLogin=messageErrorLogin);
+        elif session['pseudo'] != None:
+            messageErrorLogin = "Vous êtes déjà connecté"
             return render_template("login.html", messageErrorLogin=messageErrorLogin);
     else:
         return render_template("login.html");
@@ -146,7 +149,11 @@ def cardPigeon(idPigeon):
     user = model.getUserbyId(pigeon['idUser'])
     comments = model.getCommentsByIdPigeon(idPigeon, user['idUser'])
     randomPigeons = model.getFourRandomPigeons(idPigeon)
-    return render_template("cardPigeon.html", pigeon=pigeon, user=user, comments=comments, randomPigeons=randomPigeons);
+    if 'idUser' not in session:
+        userConnected = None
+        return render_template("cardPigeon.html", pigeon=pigeon, user=user, comments=comments, randomPigeons=randomPigeons, userConnected=userConnected);
+    userConnected = model.getUserbyId(session['idUser'])
+    return render_template("cardPigeon.html", pigeon=pigeon, user=user, userConnected=userConnected, comments=comments, randomPigeons=randomPigeons);
 
 @app.route("/pigeon/<int:idPigeon>/comment", methods=['POST'])
 def addComment(idPigeon):
@@ -156,7 +163,8 @@ def addComment(idPigeon):
     idUser = session['idUser']
     model.addComment(textCom, idUser, idPigeon)
     showCommentForm = request.args.get('showCommentForm', 'False') == 'True'
-    return render_template("cardPigeon.html", pigeon=model.getCardPigeonsById(idPigeon), user=model.getUserbyId(idUser), comments=model.getCommentsByIdPigeon(idPigeon, idUser), showCommentForm=showCommentForm, showPigeon=showPigeon)
+    randomPigeons = model.getFourRandomPigeons(idPigeon)
+    return render_template("cardPigeon.html", pigeon=model.getCardPigeonsById(idPigeon), user=model.getUserbyId(idUser), comments=model.getCommentsByIdPigeon(idPigeon, idUser), randomPigeons=randomPigeons, showCommentForm=showCommentForm)
 
 @app.route("/pigeon/<int:idPigeon>/rate", methods=['POST'])
 def addRate(idPigeon):
@@ -166,8 +174,9 @@ def addRate(idPigeon):
     noteWalk = int(request.form['notewalk'])
     noteVibe = int(request.form['notevibe'])
     noteOriginalite = int(request.form['noteoriginalite'])
-    model.addRate(noteWalk, noteVibe, noteOriginalite, idPigeon, session['idUser'])
-    return render_template("cardPigeon.html", pigeon=model.getCardPigeonsById(idPigeon), user=model.getUserbyId(idUser), comments=model.getCommentsByIdPigeon(idPigeon, idUser))
+    model.addRatePigeon(idPigeon, noteWalk, noteVibe, noteOriginalite)
+    randomPigeons = model.getFourRandomPigeons(idPigeon)
+    return render_template("cardPigeon.html", pigeon=model.getCardPigeonsById(idPigeon), user=model.getUserbyId(idUser), comments=model.getCommentsByIdPigeon(idPigeon, idUser), randomPigeons=randomPigeons)
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", debug=True)

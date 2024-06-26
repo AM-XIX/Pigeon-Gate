@@ -189,7 +189,7 @@ def getFourRandomPigeons(currentIdPigeon):
     fourRandomPigeons = mycursor.fetchall()
     return dataToPigeon(fourRandomPigeons)
 
-def ratePigeon(idPigeon, rateWalk, rateVibe, rateOriginality):
+def addRatePigeon(idPigeon, rateWalk, rateVibe, rateOriginality):
     mycursor = mydb.cursor()
     pigeon = getCardPigeonsById(idPigeon)
     rateWalk = (pigeon['rateWalk'] + rateWalk) / 2
