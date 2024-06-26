@@ -1,4 +1,4 @@
-from flask import Flask,request,render_template, session, jsonify
+from flask import Flask,request,render_template, session, jsonify, redirect, url_for
 from flask_bcrypt import Bcrypt
 import model
 
@@ -77,16 +77,16 @@ def logout():
     pigeonsBdd = model.getAllPigeons()
     return render_template("welcome.html", pigeons=pigeonsBdd);
 
-@app.route("/profil", methods=['POST', 'GET'])
+@app.route("/profil", methods=['GET'])
 def profil():
     otherProfilePicture = ['profile1', 'profile2', 'profile3', 'profile4']
     if 'pseudo' not in session:
-        return render_template("login.html") 
+        return render_template("login.html")
     user = model.getUserbyPseudo(session['pseudo'])
     otherProfilePicture.remove(user['typeProfilePicture'])
     page = request.args.get('page', default=0, type=int)
     lastPigeons = model.getLastPigeonsByUser(user['idUser'], page)
-    return render_template("profile.html", user=user, lastPigeons=lastPigeons, page=page, otherProfilePicture=otherProfilePicture)
+    return render_template("profile.html", user=user, lastPigeons=lastPigeons, page=page)
 
 @app.route("/loadMorePigeons", methods=['GET'])
 def loadMorePigeons():
@@ -101,19 +101,26 @@ def loadMorePigeons():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
     
-@app.route("/change-bio", methods=['POST', 'GET'])
-def changeBio():
-    otherProfilePicture = ['profile1', 'profile2', 'profile3', 'profile4']
+@app.route("/edit-profile", methods=['POST', 'GET'])
+def editProfile():
     if 'pseudo' not in session:
         return render_template("login.html")
+    otherProfilePicture = ['profile1', 'profile2', 'profile3', 'profile4']
+    user = model.getUserbyPseudo(session['pseudo'])
     if request.method == 'POST' and 'pseudo' in session:
-        newBio = request.form['bio']
-        model.changeBio(session['idUser'], newBio)
+        if 'typeProfilePicture' in request.form:
+            newPP = request.form['typeProfilePicture']
+            model.changeProfilePicture(session['idUser'], newPP)
+        if 'bio' in request.form:
+            newBio = request.form['bio']
+            model.changeBio(session['idUser'], newBio)
         user = model.getUserbyPseudo(session['pseudo'])
-        otherProfilePicture.remove(user['typeProfilePicture'])
-        return render_template("profile.html", user=user, lastPigeons=model.getLastPigeonsByUser(user['idUser'], 0), page=0, otherProfilePicture=otherProfilePicture)
-    else:
-        return render_template("profileEdit.html", user=model.getUserbyPseudo(session['pseudo']))
+        lastPigeons = model.getLastPigeonsByUser(user['idUser'], 0)
+        page = request.args.get('page', default=0, type=int)
+        return render_template("profile.html", user=user, lastPigeons=lastPigeons, page=page, otherProfilePicture=otherProfilePicture)
+    return render_template("profileEdit.html", user=user, otherProfilePicture=otherProfilePicture)
+
+
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", debug=True)

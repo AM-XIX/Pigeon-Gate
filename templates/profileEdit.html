@@ -30,9 +30,18 @@
         <h1>{{ user.pseudo }}</h1>
         <img src="{{ url_for('static', filename='./images/' ~ user.typeProfilePicture ~ '.png') }}"
             alt="{{ user.typeProfilePicture }}" style="width:10%;">
-        
+            {% for profile in otherProfilePicture %}
+            <form action="/edit-profile" method="post">
+                <input type="hidden" name="typeProfilePicture" value="{{ profile }}">
+                <button type="submit">
+                    <img src="{{ url_for('static', filename='images/' + profile + '.png') }}" alt="{{ profile }}"
+                        style="width:5%;">
+                </button>
+            </form>
+            {% endfor %}
+
         <p>Biographie</p>
-        <form action="{{ url_for('changeBio') }}" method="post">
+        <form action="{{ url_for('editProfile') }}" method="post">
             <textarea id="bio" name="bio">{{ user.bio }}</textarea>
             <input type="submit" value="Modifier">
         </form>
