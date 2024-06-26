@@ -12,8 +12,8 @@ app.config.from_object('config.Config')
 def welcome():
     if model.mydb.is_connected():
         session.clear()
-        pigeons = model.getAllPigeons()
-        return render_template("welcome.html", pigeons=pigeons);
+        pigeonsBdd = model.getAllPigeons()
+        return render_template("welcome.html", pigeons=pigeonsBdd);
 
 @app.route("/register", methods=['GET', 'POST'])
 def register():
@@ -28,8 +28,8 @@ def register():
             session['pseudo'] = pseudo
             session['idUser'] = model.getUserbyPseudo(pseudo);
             model.newUser(pseudo, password, typeProfilePicture)
-            pigeons = model.getAllPigeons()
-            return render_template("welcome.html", pigeons=pigeons, pseudo=pseudo);
+            pigeonsBdd = model.getAllPigeons()
+            return render_template("welcome.html", pigeons=pigeonsBdd, pseudo=pseudo);
     else:
         return render_template("register.html");
 
@@ -41,8 +41,8 @@ def login():
         if model.checkLogin(pseudo, password):
             session['idUser'] = model.getUserbyPseudo(pseudo)['idUser']
             session['pseudo'] = pseudo
-            pigeons = model.getAllPigeons()
-            return render_template("welcome.html", pigeons=pigeons, pseudo=pseudo);
+            pigeonsBdd = model.getAllPigeons()
+            return render_template("welcome.html", pigeons=pigeonsBdd, pseudo=pseudo);
         else:
             messageErrorLogin = "Pseudo ou mot de passe incorrect"
             return render_template("login.html", messageErrorLogin=messageErrorLogin);
@@ -56,16 +56,16 @@ def addPigeon():
         return render_template("login.html");
     if request.method == 'POST' and 'pseudo' in session:
         model.addPigeon(request.form['prenom'], request.form['couleur'], request.form['noteWalk'], request.form['notevibe'], request.form['noteoriginalite'], request.form['place'], request.form['urlPhoto'], session['pseudo'])
-        pigeons = model.getAllPigeons()
-        return render_template("welcome.html", pigeons=pigeons);
+        pigeonBdd = model.getAllPigeons()
+        return render_template("welcome.html", pigeons=pigeonBdd)
     else:
         return render_template("new_pigeon.html");
 
 @app.route("/logout", methods=['POST', 'GET'])
 def logout():
     session.clear()
-    pigeons = model.getAllPigeons()
-    return render_template("welcome.html", pigeons=pigeons);
+    pigeonsBdd = model.getAllPigeons()
+    return render_template("welcome.html", pigeons=pigeonsBdd);
 
 @app.route("/profil", methods=['POST', 'GET'])
 def profil():
