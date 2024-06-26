@@ -26,7 +26,7 @@ def register():
             return render_template("register.html", messageErrorRegister=messageErrorRegister);
         else:
             session['pseudo'] = pseudo
-            session['idUser'] = model.getUserbyPseudo(pseudo);
+            session['idUser'] = int(model.getUserbyPseudo(pseudo)['idUser'])
             model.newUser(pseudo, password, typeProfilePicture)
             pigeonsBdd = model.getAllPigeons()
             return render_template("welcome.html", pigeons=pigeonsBdd, pseudo=pseudo);
@@ -39,7 +39,7 @@ def login():
         pseudo = request.form['pseudo']
         password = request.form['password']
         if model.checkLogin(pseudo, password):
-            session['idUser'] = model.getUserbyPseudo(pseudo)['idUser']
+            session['idUser'] = int(model.getUserbyPseudo(pseudo)['idUser'])
             session['pseudo'] = pseudo
             pigeonsBdd = model.getAllPigeons()
             return render_template("welcome.html", pigeons=pigeonsBdd, pseudo=pseudo);
@@ -55,11 +55,15 @@ def addPigeon():
     if 'pseudo' not in session:
         return render_template("login.html");
     if request.method == 'POST' and 'pseudo' in session:
-        model.addPigeon(request.form['prenom'], request.form['couleur'], request.form['noteWalk'], request.form['notevibe'], request.form['noteoriginalite'], request.form['place'], request.form['urlPhoto'], session['pseudo'])
+        idUser = session['idUser']
+        noteWalk = int(request.form['notewalk'])
+        noteVibe = int(request.form['notevibe'])
+        noteOriginalite = int(request.form['noteoriginalite'])
+        model.addPigeon(request.form['prenom'], request.form['couleur'], noteWalk, noteVibe, noteOriginalite, request.form['place'], request.form['urlPhoto'], idUser)
         pigeonBdd = model.getAllPigeons()
         return render_template("welcome.html", pigeons=pigeonBdd)
     else:
-        return render_template("new_pigeon.html");
+        return render_template("newPigeon.html");
 
 @app.route("/logout", methods=['POST', 'GET'])
 def logout():
