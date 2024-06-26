@@ -36,10 +36,14 @@
         <p>Originalité : {{ pigeon.rateOriginality }}</p>
         <p>Démarche : {{ pigeon.rateWalk }}</p>
         <p>Vibe : {{ pigeon.rateVibe }}</p>
+        {% if not pseudo %}
+        <p>Connectez-vous pour noter ce pigeon</p>
+        {% elif pseudo %}
         <a href="{{ url_for('cardPigeon', idPigeon=pigeon.idPigeon, showCommentForm=True) }}">Noter</a>
-
+        {% endif %}
+        
         {% if request.args.get('showCommentForm') == 'True' %}
-        <form action="" method="post">
+        <form action="/pigeon/{{ pigeon.idPigeon }}/rate" method="post">
             <p>Originalité:</p>
             <input type="radio" id="1" name="noteoriginalite" value="1">
             <label for="1">1</label>

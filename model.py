@@ -188,3 +188,12 @@ def getFourRandomPigeons(currentIdPigeon):
     mycursor.execute("SELECT * FROM Pigeon WHERE idPigeon != %s ORDER BY RAND() LIMIT 4", (currentIdPigeon,))
     fourRandomPigeons = mycursor.fetchall()
     return dataToPigeon(fourRandomPigeons)
+
+def ratePigeon(idPigeon, rateWalk, rateVibe, rateOriginality):
+    mycursor = mydb.cursor()
+    pigeon = getCardPigeonsById(idPigeon)
+    rateWalk = (pigeon['rateWalk'] + rateWalk) / 2
+    rateVibe = (pigeon['rateVibe'] + rateVibe) / 2
+    rateOriginality = (pigeon['rateOriginality'] + rateOriginality) / 2
+    mycursor.execute("UPDATE Pigeon SET rateWalk = %s, rateVibe = %s, rateOriginality = %s WHERE idPigeon = %s", (rateWalk, rateVibe, rateOriginality, idPigeon))
+    mydb.commit()
