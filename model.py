@@ -205,3 +205,9 @@ def getTrendingPigeons():
     mycursor.execute("SELECT * FROM Pigeon ORDER BY nbLike DESC LIMIT 4")
     trendingPigeons = mycursor.fetchall()
     return dataToPigeon(trendingPigeons)
+
+def getAllCategories():
+    mycursor = mydb.cursor()
+    mycursor.execute("SELECT nom FROM Categorie")
+    categories = mycursor.fetchall()
+    return categories

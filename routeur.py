@@ -35,7 +35,8 @@ def register():
             model.newUser(pseudo, password, typeProfilePicture)
             pigeonsBdd = model.getAllPigeons()
             session['idUser'] = model.getUserbyPseudo(pseudo)['idUser']
-            return render_template("welcome.html", pigeons=pigeonsBdd, pseudo=pseudo);
+            allCategories = model.getAllCategories()
+            return render_template("galery.html", pigeons=pigeonsBdd, pseudo=pseudo, allCategories=allCategories);
     else:
         return render_template("register.html");
 
@@ -48,7 +49,8 @@ def login():
             session['idUser'] = int(model.getUserbyPseudo(pseudo)['idUser'])
             session['pseudo'] = pseudo
             pigeonsBdd = model.getAllPigeons()
-            return render_template("welcome.html", pigeons=pigeonsBdd, pseudo=pseudo);
+            allCategories = model.getAllCategories()
+            return render_template("galery.html", pigeons=pigeonsBdd, pseudo=pseudo, allCategories=allCategories);
         elif model.getUserbyPseudo(pseudo)==None:
             messageErrorLogin = "Pseudo ou mot de passe incorrect"
             return render_template("login.html", messageErrorLogin=messageErrorLogin);
@@ -70,7 +72,9 @@ def addPigeon():
         noteOriginalite = int(request.form['noteoriginalite'])
         model.addPigeon(request.form['prenom'], request.form['couleur'], noteWalk, noteVibe, noteOriginalite, request.form['place'], request.form['urlPhoto'], idUser)
         pigeonBdd = model.getAllPigeons()
-        return render_template("welcome.html", pigeons=pigeonBdd)
+        pseudo = session['pseudo']
+        allCategories = model.getAllCategories()
+        return render_template("galery.html", pigeons=pigeonBdd, pseudo=pseudo, allCategories=allCategories);
     else:
         return render_template("newPigeon.html");
 
@@ -78,7 +82,8 @@ def addPigeon():
 def logout():
     session.clear()
     pigeonsBdd = model.getAllPigeons()
-    return render_template("welcome.html", pigeons=pigeonsBdd);
+    allCategories = model.getAllCategories()
+    return render_template("galery.html", pigeons=pigeonsBdd, allCategories=allCategories);
 
 @app.route("/profil", methods=['GET'])
 def profil():
@@ -140,7 +145,8 @@ def galery():
     else:
         pseudo = session['pseudo']
     pigeons = model.getAllPigeons()
-    return render_template("galery.html", pigeons=pigeons, pseudo=pseudo);
+    allCategories = model.getAllCategories()
+    return render_template("galery.html", pigeons=pigeons, pseudo=pseudo, allCategories=allCategories);
 
 @app.route("/about", methods=['GET'])
 def about():

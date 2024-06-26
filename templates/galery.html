@@ -36,41 +36,29 @@
       <a href="{{ url_for('addPigeon') }}">Ajouter un pigeon</a>
     </div>
 
+    <div>
+      <input type="text" placeholder="Search bar....">
+      <select name="cats" id="cat-select">
+        <option value="">Catégories</option>
+        {% for categorie in allCategories %}
+        <option value="{{ categorie }}">{{ categorie }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
     <div class="cards-container">
       {% for pigeon in pigeons %}
       <a href="{{ url_for('cardPigeon', idPigeon=pigeon.idPigeon) }}" class="pigeon-card-link">
-      <div class="pigeon-card">
-        <img src="{{ pigeon.urlPhoto }}" alt="" style="width:100%">
-        <b>
-          <p class="pigeon-title">{{ pigeon.prenomPigeon }}</p>
-        </b>
-        <p><span>Couleur :</span> {{ pigeon.color }}</p>
-        <p><span>Looté à :</span> {{ pigeon.place }}</p>
-      </div>
-    </a>
+        <div class="pigeon-card">
+          <img src="{{ pigeon.urlPhoto }}" alt="" style="width:100%">
+          <b>
+            <p class="pigeon-title">{{ pigeon.prenomPigeon }}</p>
+          </b>
+          <p><span>Couleur :</span> {{ pigeon.color }}</p>
+          <p><span>Looté à :</span> {{ pigeon.place }}</p>
+        </div>
+      </a>
       {% endfor %}
-    </div>
-  </section>
-  <section id="principe">
-    <h3>Le principe</h3>
-    <div class="principe-container">
-      <img src="https://i.pinimg.com/736x/b9/c4/7e/b9c47ef70bff06613d397abfce02c6e7.jpg" alt="">
-      <div>
-        <h4>Partage tes pigeons !</h4>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi at neque pellentesque, pulvinar est ut, mollis
-          odio. Aliquam pulvinar posuere tristique. Curabitur lacinia odio et condimentum molestie. Suspendisse molestie
-          rhoncus cursus. Fusce quis nisl odio. Nam eu leo magna. Cras vitae porta orci, nec malesuada orci. Etiam eu
-          neque fermentum, lobortis arcu dignissim, tincidunt ligula. Orci varius natoque penatibus et magnis dis
-          parturient montes, nascetur ridiculus mus. Interdum et malesuada fames ac ante ipsum primis in faucibus.
-          Vivamus luctus, mi eget ornare faucibus, dui dolor posuere massa, a vehicula magna est at nibh. Cras placerat,
-          nulla non faucibus volutpat, ante urna fermentum elit, eget aliquet quam purus nec risus. Phasellus imperdiet
-          vehicula viverra. Vivamus cursus, leo laoreet lacinia pharetra, magna nulla pellentesque dui, rhoncus vehicula
-          ex erat sit amet lacus. Mauris quam tellus, accumsan eu elementum sagittis, rhoncus at augue. Nunc dapibus dui
-          velit.
-        </p>
-        <a href="{{ url_for('register') }}">Rejoins-nous</a>
-      </div>
     </div>
   </section>
   <a id="back-top" href="#top">&uarr; Revenir en haut &uarr;</a>
@@ -78,7 +66,7 @@
     <p><a href="/about">The Pigeon Team</a></p>
     <p><a href="https://github.com/AM-XIX/Pigeon-Gate" target="_blank">Pigeon Gate™</a></p>
     <p>IMAC 2024 ©</p>
-</footer>
+  </footer>
 </body>
 
 </html>
