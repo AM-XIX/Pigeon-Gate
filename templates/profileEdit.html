@@ -27,7 +27,13 @@
         </div>
     </nav>
     <section>
-        <h1>{{ user.pseudo }}</h1>
+        <form action="{{ url_for('editProfile') }}" method="post">
+            <p>Pseudo</p>
+            <textarea id="pseudo" name="pseudo">{{ user.pseudo }}</textarea>
+            <p>Biographie</p>
+            <textarea id="bio" name="bio">{{ user.bio }}</textarea><br>
+            <input type="submit" value="Modifier">
+        </form>
         <img src="{{ url_for('static', filename='./images/' ~ user.typeProfilePicture ~ '.png') }}"
             alt="{{ user.typeProfilePicture }}" style="width:10%;">
         {% for profile in otherProfilePicture %}
@@ -40,11 +46,7 @@
         </form>
         {% endfor %}
 
-        <p>Biographie</p>
-        <form action="{{ url_for('editProfile') }}" method="post">
-            <textarea id="bio" name="bio">{{ user.bio }}</textarea>
-            <input type="submit" value="Modifier">
-        </form>
+
     </section>
 
 </body>

@@ -81,6 +81,11 @@ def changeProfilePicture(idUser, newTypeProfilePicture):
     mycursor.execute("UPDATE User SET typeProfilePicture = %s WHERE idUser = %s", (newTypeProfilePicture, idUser))
     mydb.commit()
 
+def changePseudo(idUser, newPseudo):
+    mycursor = mydb.cursor()
+    mycursor.execute("UPDATE User SET pseudo = %s WHERE idUser = %s", (newPseudo, idUser))
+    mydb.commit()
+
 
 ## Pigeon
 

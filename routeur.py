@@ -107,21 +107,28 @@ def editProfile():
         return render_template("login.html")
     otherProfilePicture = ['profile1', 'profile2', 'profile3', 'profile4']
     user = model.getUserbyPseudo(session['pseudo'])
-    if request.method == 'POST' and 'pseudo' in session:
+    currentProfilePicture = user['typeProfilePicture']
+    if request.method == 'POST':
         if 'typeProfilePicture' in request.form:
             newPP = request.form['typeProfilePicture']
             model.changeProfilePicture(session['idUser'], newPP)
-            otherProfilePicture.remove(newPP)
-        if 'bio' in request.form:
+            currentProfilePicture = newPP
+        if 'bio' in request.form or 'pseudo' in request.form:
             newBio = request.form['bio']
             model.changeBio(session['idUser'], newBio)
+            newPseudo = request.form['pseudo']
+            if newPseudo != session['pseudo'] and model.getUserbyPseudo(newPseudo)==None:
+                model.changePseudo(session['idUser'], newPseudo)
+                session['pseudo'] = newPseudo
+            else:
+                return render_template("profileEdit.html", user=user, otherProfilePicture=otherProfilePicture)
         user = model.getUserbyPseudo(session['pseudo'])
         lastPigeons = model.getLastPigeonsByUser(user['idUser'], 0)
         page = request.args.get('page', default=0, type=int)
-        return render_template("profileEdit.html", user=user, lastPigeons=lastPigeons, page=page, otherProfilePicture=otherProfilePicture)
-    currentProfilePicture = user['typeProfilePicture']
+        return render_template("profile.html", user=user, lastPigeons=lastPigeons, page=page, otherProfilePicture=[pic for pic in otherProfilePicture if pic != currentProfilePicture])
     otherProfilePicture = [pic for pic in otherProfilePicture if pic != currentProfilePicture]
     return render_template("profileEdit.html", user=user, otherProfilePicture=otherProfilePicture)
+
 
 @app.route("/galery", methods=['GET'])
 def galery():
