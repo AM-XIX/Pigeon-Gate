@@ -13,12 +13,16 @@
     --text:"DKNouveauCrayon";
     --primary:#FFF84C;
     --secondary:#FE41B2;
+    background-color: var(--secondary);
 }
 
 body {
+    margin:0;
+    padding:0;
     color:var(--secondary);
     background-color: var(--primary);
     font-family: var(--text);
+    overflow-x: hidden;
 }
 
 h1, h2, h4 {
