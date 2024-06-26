@@ -12,13 +12,13 @@ app.config.from_object('config.Config')
 def welcome():
     if model.mydb.is_connected():
         session.clear()
-        pigeonsBdd = model.getAllPigeons()
+        pigeonsBdd = model.getTrendingPigeons()
         return render_template("welcome.html", pigeons=pigeonsBdd);
 
 @app.route("/accueil", methods=['GET', 'POST'])
 def accueil():
     if model.mydb.is_connected():
-        pigeonsBdd = model.getAllPigeons()
+        pigeonsBdd = model.getTrendingPigeons()
         return render_template("welcome.html", pigeons=pigeonsBdd);
 
 @app.route("/register", methods=['GET', 'POST'])
@@ -135,8 +135,12 @@ def editProfile():
 
 @app.route("/galery", methods=['GET'])
 def galery():
-    pigeonsBdd = model.getAllPigeons()
-    return render_template("welcome.html", pigeons=pigeonsBdd);
+    if 'pseudo' not in session:
+        pseudo = None
+    else:
+        pseudo = session['pseudo']
+    pigeons = model.getAllPigeons()
+    return render_template("galery.html", pigeons=pigeons, pseudo=pseudo);
 
 @app.route("/about", methods=['GET'])
 def about():

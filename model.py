@@ -115,7 +115,8 @@ def dataToPigeon(datas):
             "rateOriginality": pigeon[5],
             "place": pigeon[6],
             "urlPhoto": pigeon[7],
-            "idUser": pigeon[8]
+            "nbLike": pigeon[8],
+            "idUser": pigeon[9],
         }    
         pigeons.append(pigeon)
     return pigeons
@@ -149,7 +150,8 @@ def getCardPigeonsById(idPigeon):
         "rateOriginality": cardPigeons[5],
         "place": cardPigeons[6],
         "urlPhoto": cardPigeons[7],
-        "idUser": cardPigeons[8]
+        "nbLike": cardPigeons[8],
+        "idUser": cardPigeons[9],
     }
     return pigeon
 
@@ -197,3 +199,9 @@ def addRatePigeon(idPigeon, rateWalk, rateVibe, rateOriginality):
     rateOriginality = (pigeon['rateOriginality'] + rateOriginality) / 2
     mycursor.execute("UPDATE Pigeon SET rateWalk = %s, rateVibe = %s, rateOriginality = %s WHERE idPigeon = %s", (rateWalk, rateVibe, rateOriginality, idPigeon))
     mydb.commit()
+
+def getTrendingPigeons():
+    mycursor = mydb.cursor()
+    mycursor.execute("SELECT * FROM Pigeon ORDER BY nbLike DESC LIMIT 4")
+    trendingPigeons = mycursor.fetchall()
+    return dataToPigeon(trendingPigeons)
