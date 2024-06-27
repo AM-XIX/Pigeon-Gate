@@ -7,6 +7,7 @@
   <title>Accueil</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='./css/main.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='./css/welcome.css') }}">
+  <script src="{{ url_for('static', filename='./js/manageJson.js') }}"></script>
 </head>
 
 <body>
@@ -36,6 +37,8 @@
     <div id="trending-header">
       <h3>Trending ✨</h3>
       <a href="{{ url_for('galery') }}">Explorer</a>
+      <button id="bullying">Bullying</button>
+      <p id="sumUsers"></p>
     </div>
 
     <div class="cards-container">

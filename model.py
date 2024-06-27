@@ -86,6 +86,12 @@ def changePseudo(idUser, newPseudo):
     mycursor.execute("UPDATE User SET pseudo = %s WHERE idUser = %s", (newPseudo, idUser))
     mydb.commit()
 
+def sumUsers():
+    mycursor = mydb.cursor()
+    mycursor.execute("SELECT COUNT(*) FROM User")
+    sumUsers = mycursor.fetchone()
+    return sumUsers[0]
+
 
 ## Pigeon
 
@@ -169,6 +175,27 @@ def getTrendingPigeons():
     mycursor.execute("SELECT * FROM Pigeon ORDER BY nbLike DESC LIMIT 4")
     trendingPigeons = mycursor.fetchall()
     return dataToPigeon(trendingPigeons)
+
+
+def getWorstPigeon():
+    mycursor = mydb.cursor()
+    mycursor.execute("SELECT * FROM Pigeon ORDER BY nbLike ASC LIMIT 1")
+    result = mycursor.fetchone()
+    if result:
+        return {
+            "idPigeon": result[0],
+            "prenomPigeon": result[1],
+            "color": result[2],
+            "rateWalk": result[3],
+            "rateVibe": result[4],
+            "rateOriginality": result[5],
+            "place": result[6],
+            "urlPhoto": result[7],
+            "nbLike": result[8],
+            "idUser": result[9],
+        }
+    else:
+        return None
 
 
 # Comment

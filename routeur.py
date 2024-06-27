@@ -203,5 +203,33 @@ def category(idCategory):
     allCategories = model.getAllCategories()
     return render_template("galery.html", pigeons=pigeons, pseudo=pseudo, allCategories=allCategories);
 
+
+# JSON
+
+@app.route('/worstPigeon', methods=['GET'])
+def worstPigeon():
+    try:
+        worstPigeon = model.getWorstPigeon()
+        
+        if worstPigeon:
+            moyenne = (worstPigeon['rateWalk'] + worstPigeon['rateVibe'] + worstPigeon['rateOriginality']) / 3
+            return jsonify({
+                "idPigeon": int(worstPigeon['idPigeon']),
+                "prenomPigeon": worstPigeon['prenomPigeon'],
+                "color": worstPigeon['color'],
+                "place": worstPigeon['place'],
+                "urlPhoto": worstPigeon['urlPhoto'],
+                "moyenne": moyenne
+            })
+        else:
+            return jsonify({'error': 'No pigeon found'}), 404
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+    
+@app.route('/bullyPigeon', methods=['GET'])
+def bullyPigeon():
+    return render_template("worstPigeon.html");
+    
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", debug=True)
