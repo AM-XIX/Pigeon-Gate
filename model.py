@@ -210,4 +210,20 @@ def getAllCategories():
     mycursor = mydb.cursor()
     mycursor.execute("SELECT nom FROM Categorie")
     categories = mycursor.fetchall()
+    categories = [categorie[0] for categorie in categories] # transfo tuples
     return categories
+
+def getIDCategoryByName(category):
+    mycursor = mydb.cursor()
+    mycursor.execute("SELECT idCat FROM Categorie WHERE nom = %s", (category,))
+    idCat = mycursor.fetchone()
+    return idCat[0]
+
+def getPigeonsByCategory(category):
+    mycursor = mydb.cursor()
+    idCat = getIDCategoryByName(category)
+    query = "SELECT * FROM Categorie INNER JOIN Categorise ON Categorise.idCat = Categorie.idCat INNER JOIN Pigeon ON Categorise.idPigeon = Pigeon.idPigeon WHERE Categorie.idCat = %s"
+    mycursor.execute(query, (idCat,))
+    pigeons = mycursor.fetchall()
+    print(pigeons)
+    return dataToPigeon(pigeons)
