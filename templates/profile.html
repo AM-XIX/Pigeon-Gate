@@ -36,7 +36,7 @@
                 <div id="profile-bar">
                     <div id="profile-title">
                         <h3>{{ user.pseudo }}</h3>
-                        <a href="{{ url_for('editProfile') }}">Modifier</a>
+                        <a id="edit-button" href="{{ url_for('editProfile') }}"><img src="/static/images/edit-icon.png"></a>
                     </div>
                     <p>{{ user.sommePigeons }} pigeons postés</p>
                 </div>
@@ -44,6 +44,7 @@
                 <p>{{ user.bio }} </p>
             </div>
         </div>
+
         <h3>Les derniers pigeons postés</h3>
         <div class="cards-container">
             {% for lastPigeon in lastPigeons %}
@@ -59,9 +60,16 @@
             </div>
             {% endfor %}
         </div>
+        <button id="load-more" data-page="{{ page + 1 }}">Load more</button>
     </section>
 
-    <button id="load-more" data-page="{{ page + 1 }}">Load More</button>
+
+    <a id="back-top" href="#top">&uarr; Revenir en haut &uarr;</a>
+    <footer>
+        <p><a href="/about">The Pigeon Team</a></p>
+        <p><a href="https://github.com/AM-XIX/Pigeon-Gate" target="_blank">Pigeon Gate™</a></p>
+        <p>IMAC 2024 ©</p>
+    </footer>
 
     <script>
         $(document).ready(function () {
