@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='./images/favicon.ico') }}">
+    <title>S'inscrire</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='./css/main.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='./css/pigeon_desc.css') }}">
+</head>
+
+<body>
+    <header>
+        <h1><a href="{{ url_for('accueil') }}">Pigeon Gate</a></h1>
+        <h2>Bienvenue sur Pigeon-Gate{% if pseudo %}, {{ pseudo }}{% else %}{% endif %} !</h2>
+        <hr>
+    </header>
+    <nav>
+        <div>
+            <li><a href="">the pigeons</a></li>
+            <li><a href="">à propos</a></li>
+        </div>
+        <div>
+            {% if not pseudo %}
+            <li><a href="{{ url_for('register') }}" class="active-page">S'inscrire</a></li>
+            <li><a href="{{ url_for('login') }}">Se connecter</a></li>
+            {% elif pseudo %}
+            <li><a href="{{ url_for('profil') }}">Mon profil</a></li>
+            <li><a href="{{ url_for('logout') }}">Se déconnecter</a></li>
+            {% endif %}
+        </div>
+    </nav>
+    {% if messageErrorRegister %}
+    <p style="color: red;">{{ messageErrorRegister }}</p>
+    {% endif %}
+    <section>
+        <h1>A Propos</h1>
+        <div>
+            <h2> Le projet</h2>
+            <p>Pigeon Gate sort tout droit de l’imagination débordante d’Anna Maria.
+                 Suite à l’obsession malsaine de Louise pour les pigeons, 
+                 elle a imaginé un site où Louise pourrait exprimer son hyper-fixation sans 
+                 aucune honte. Un véritable réseau social de pigeons, où chaque petit oiseau 
+                 serait représenté à sa juste valeur. Vous vous demandez donc ce qu’Angèle 
+                 vient faire là? Elle a juste suivi Anna Maria et Louise dans leur idée quelque peu... originale. ^^
+            </p>
+        </div>
+
+        <div>
+            <h2>Notre équipe</h2>
+            <div>
+                <div>
+                    <img src="https://i.pinimg.com/736x/b9/c4/7e/b9c47ef70bff06613d397abfce02c6e7.jpg" alt="">
+                    <p>Louise</p>
+                    <p>Pigeon qui fume </p>
+                </div>
+                <div>
+                    <img src="https://images7.memedroid.com/images/UPLOADED295/65bb66a6876c0.jpeg" alt="">
+                    <p>Anna Maria</p>
+                    <p>Pigeon qui joie</p>
+                </div>
+                <div>
+                    <img src="https://i.pinimg.com/564x/d0/f1/57/d0f157e24f15746be8372144f1d3d6dd.jpg" alt="">
+                    <p>Angèle</p>
+                    <p>Pigeon qui dodo</p>
+                </div>
+            </div>
+        </div>
+
+
+
+        <p><a href="{{ url_for('galery') }}">Explorer</a>"</p>
+    </section>
+    <a id="back-top" href="#top">&uarr; Revenir en haut &uarr;</a>
+    <footer>
+        <p><a href="/about">The Pigeon Team</a></p>
+        <p><a href="https://github.com/AM-XIX/Pigeon-Gate" target="_blank">Pigeon Gate™</a></p>
+        <p>IMAC 2024 ©</p>
+    </footer>
+</body>
+
+</html>

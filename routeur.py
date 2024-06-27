@@ -152,8 +152,7 @@ def galery():
 
 @app.route("/about", methods=['GET'])
 def about():
-    pigeonBdd = model.getCardPigeonsById()
-    return render_template("cardPigeon.html", pigeon=pigeonBdd);
+    return render_template("about.html");
 
 @app.route("/pigeon/<idPigeon>", methods=['GET'])
 def cardPigeon(idPigeon):
