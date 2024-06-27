@@ -251,7 +251,3 @@ def loadMorePigeons():
 @app.route('/bullyPigeon', methods=['GET'])
 def bullyPigeon():
     return render_template("worstPigeon.html");
-    
-
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", debug=True)
