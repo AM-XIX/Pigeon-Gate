@@ -75,7 +75,9 @@
           ex erat sit amet lacus. Mauris quam tellus, accumsan eu elementum sagittis, rhoncus at augue. Nunc dapibus dui
           velit.
         </p>
+        {% if not pseudo %}
         <a href="{{ url_for('register') }}">Rejoins-nous</a>
+        {% endif %}
       </div>
     </div>
   </section>

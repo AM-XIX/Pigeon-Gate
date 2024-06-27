@@ -74,11 +74,7 @@
     <script>
         $(document).ready(function () {
             $('#load-more').click(function () {
-                var userId = {
-                    {
-                        user['idUser']
-                    }
-                };
+                var userId = {{ user['idUser'] }};
                 var nextPage = $(this).data('page');
 
                 $.ajax({
