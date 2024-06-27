@@ -40,18 +40,19 @@
     <div>
       <input type="text" placeholder="Search bar....">
       <select name="cats" id="cat-select">
-          <option value="">Catégories</option>
-          {% for categorie in allCategories %}
-          <option value="{{ categorie.idCat }}">{{ categorie.nom }}</option>
-          {% endfor %}
+        <option value="">Catégories</option>
+        {% for categorie in allCategories %}
+        <option value="{{ categorie.idCat }}">{{ categorie.nom }}</option>
+        {% endfor %}
       </select>
-  </div>
+    </div>
 
     <div class="cards-container">
       {% for pigeon in pigeons %}
       <a href="{{ url_for('cardPigeon', idPigeon=pigeon.idPigeon) }}" class="pigeon-card-link">
         <div class="pigeon-card">
-          <img src="{{ pigeon.urlPhoto }}" alt="" style="width:100%">
+          <div class="pigeon-image" alt="" style="background:url('{{ pigeon.urlPhoto }}') center center/cover;">
+          </div>
           <b>
             <p class="pigeon-title">{{ pigeon.prenomPigeon }}</p>
           </b>
