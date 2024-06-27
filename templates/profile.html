@@ -27,22 +27,29 @@
             <li><a href="{{ url_for('logout') }}">Se déconnecter</a></li>
         </div>
     </nav>
+
     <section>
-        <img src="{{ url_for('static', filename='./images/' ~ user.typeProfilePicture ~ '.png') }}"
-            alt="{{ user.typeProfilePicture }}">
-        <div id="profile-card">
-            <h3>{{ user.pseudo }}</h3>
-
-            <p> Biographie<br>{{ user.bio }} </p>
-            <a href="{{ url_for('editProfile') }}">Modifier</a>
-            <p>{{ user.sommePigeons }} pigeons postés</p>
+        <div id="profile-all">
+            <img src="{{ url_for('static', filename='./images/' ~ user.typeProfilePicture ~ '.png') }}"
+                alt="{{ user.typeProfilePicture }}">
+            <div id="profile-card">
+                <div id="profile-bar">
+                    <div id="profile-title">
+                        <h3>{{ user.pseudo }}</h3>
+                        <a href="{{ url_for('editProfile') }}">Modifier</a>
+                    </div>
+                    <p>{{ user.sommePigeons }} pigeons postés</p>
+                </div>
+                <h4>Biographie</h4>
+                <p>{{ user.bio }} </p>
+            </div>
         </div>
-
         <h3>Les derniers pigeons postés</h3>
         <div class="cards-container">
             {% for lastPigeon in lastPigeons %}
             <div class="pigeon-card">
-                <div class="pigeon-image" alt="" style="background:url('{{ pigeon.urlPhoto }}') center center/cover;">
+                <div class="pigeon-image" alt=""
+                    style="background:url('{{ lastPigeon.urlPhoto }}') center center/cover;">
                 </div>
                 <b>
                     <p class="pigeon-title">{{ lastPigeon.prenomPigeon }}</p>
