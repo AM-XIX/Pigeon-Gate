@@ -105,7 +105,7 @@ def sumAllPigeonsByUser(idUser):
 
 def getAllPigeons():
     mycursor = mydb.cursor()
-    mycursor.execute("SELECT * FROM Pigeon")
+    mycursor.execute("SELECT * FROM Pigeon ORDER BY RAND()")
     allPigeons = mycursor.fetchall()
     return dataToPigeon(allPigeons)
 
