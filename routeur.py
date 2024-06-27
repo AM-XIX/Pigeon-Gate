@@ -152,7 +152,9 @@ def galery():
 
 @app.route("/about", methods=['GET'])
 def about():
-    return render_template("about.html");
+    if 'pseudo' not in session:
+        return render_template("about.html");
+    return render_template("about.html", pseudo=session['pseudo']);
 
 @app.route("/pigeon/<idPigeon>", methods=['GET'])
 def cardPigeon(idPigeon):
