@@ -21,6 +21,8 @@
         <input type="text" name="place" id="place" required><br>
 
         <p>Note son originalité:</p>
+        <input type="radio" id="0" name="noteoriginalite" value="0">
+        <label for="0">0</label>
         <input type="radio" id="1" name="noteoriginalite" value="1">
         <label for="1">1</label>
         <input type="radio" id="2" name="noteoriginalite" value="2">
@@ -33,6 +35,8 @@
         <label for="5">5</label>
 
         <p>Note sa démarche:</p>
+        <input type="radio" id="0" name="notewalk" value="0">
+        <label for="0">0</label>
         <input type="radio" id="1" name="notewalk" value="1">
         <label for="1">1</label>
         <input type="radio" id="2" name="notewalk" value="2">
@@ -45,6 +49,8 @@
         <label for="5">5</label>
 
         <p>Note sa vibe:</p>
+        <input type="radio" id="0" name="notevibe" value="0">
+        <label for="0">0</label>
         <input type="radio" id="1" name="notevibe" value="1">
         <label for="1">1</label>
         <input type="radio" id="2" name="notevibe" value="2">
@@ -60,16 +66,11 @@
         <input type="text" name="urlPhoto" id="urlPhoto" required>
         <br>
 
-        <!-- <p>A quelle catégorie appartient-il?</p>
-        <input type="checkbox" id="cat1" name="cat1" value="Estropié">
-        <label for="cat1">Estropié</label><br>
-        <input type="checkbox" id="cat2" name="cat2" value="Pride">
-        <label for="cat2">Pride</label><br>
-        <input type="checkbox" id="cat3" name="cat3" value="Punk">
-        <label for="cat3">Punk</label><br><br>
-     -->
-        <br>
-
+        <p>A quelle catégorie appartient-il?</p>
+        {% for categorie in allCategories %}
+        <input type="checkbox" id="{{ categorie.idCat }}" name="categories" value="{{ categorie.idCat }}">
+        <label for="{{ categorie.idCat }}">{{ categorie.nom }}</label>
+        {% endfor %}
         <input type="submit" value="Poster un pigeon">
 
         <br>

@@ -36,7 +36,7 @@
                 <div id="profile-bar">
                     <div id="profile-title">
                         <h3>{{ user.pseudo }}</h3>
-                        <a id="edit-button" href="{{ url_for('editProfile') }}"><img src="/static/images/edit-icon.png"></a>
+                        <a id="edit-button" href="{{ url_for('editProfile') }}"><img src="/static/images/edit-icon.png"></a>:
                     </div>
                     <p>{{ user.sommePigeons }} pigeons postés</p>
                 </div>
@@ -73,8 +73,8 @@
 
     <script>
         $(document).ready(function () {
+            var userId = {{ user['idUser'] }};
             $('#load-more').click(function () {
-                var userId = {{ user['idUser'] }};
                 var nextPage = $(this).data('page');
 
                 $.ajax({

@@ -67,18 +67,21 @@ def login():
 def addPigeon():
     if 'pseudo' not in session:
         return render_template("login.html");
+    allCategories = model.getAllCategories()
     if request.method == 'POST' and 'pseudo' in session:
         idUser = session['idUser']
         noteWalk = int(request.form['notewalk'])
         noteVibe = int(request.form['notevibe'])
         noteOriginalite = int(request.form['noteoriginalite'])
-        model.addPigeon(request.form['prenom'], request.form['couleur'], noteWalk, noteVibe, noteOriginalite, request.form['place'], request.form['urlPhoto'], idUser)
+        namePigeon = request.form['prenom']
+        model.addPigeon(namePigeon, request.form['couleur'], noteWalk, noteVibe, noteOriginalite, request.form['place'], request.form['urlPhoto'], idUser)
         pigeonBdd = model.getAllPigeons()
         pseudo = session['pseudo']
-        allCategories = model.getAllCategories()
+        categories = request.form.getlist('categories')
+        model.addCategoryByCheckbox(namePigeon, categories)
         return render_template("galery.html", pigeons=pigeonBdd, pseudo=pseudo, allCategories=allCategories);
     else:
-        return render_template("newPigeon.html");
+        return render_template("newPigeon.html", allCategories=allCategories);
 
 @app.route("/logout", methods=['POST', 'GET'])
 def logout():

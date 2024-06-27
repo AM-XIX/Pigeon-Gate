@@ -266,3 +266,22 @@ def getPigeonsByCategory(idcategory):
     mycursor.execute(query, (idcategory,))
     pigeons = mycursor.fetchall()
     return dataToPigeon(pigeons)
+
+def addCategoryToPigeonById(idPigeon, idCat):
+    mycursor = mydb.cursor()
+    mycursor.execute("INSERT INTO Categorise (idPigeon, idCat) VALUES (%s, %s)", (idPigeon, idCat))
+    mydb.commit()
+
+def addCategoryByCheckbox(namePigeon, tabCategories):
+    idPigeon = getPigeonByName(namePigeon)
+    for category in tabCategories:
+        addCategoryToPigeonById(idPigeon, category)
+
+def getPigeonByName(namePigeon):
+    mycursor = mydb.cursor()
+    query = "SELECT * FROM Pigeon WHERE prenomPigeon = %s"
+    mycursor.execute(query, (namePigeon,))
+    pigeon = mycursor.fetchone()
+    if pigeon:
+        return pigeon[0]
+    return None
