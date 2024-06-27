@@ -12,6 +12,7 @@
 <body>
   <header>
     <h1><a href="{{ url_for('accueil') }}">Pigeon Gate</a></h1>
+    <h2>Bienvenue chez nous{% if pseudo %}, {{ pseudo }}{% else %}{% endif %} !</h2>
     <hr>
   </header>
   <nav>
@@ -28,6 +29,7 @@
       <li><a href="{{ url_for('logout') }}">Se déconnecter</a></li>
       {% endif %}
     </div>
+    </div>
   </nav>
 
   <section id="trending">
@@ -40,7 +42,8 @@
       {% for pigeon in pigeons %}
       <a href="{{ url_for('cardPigeon', idPigeon=pigeon.idPigeon) }}" class="pigeon-card-link">
       <div class="pigeon-card">
-        <img src="{{ pigeon.urlPhoto }}" alt="" style="width:100%">
+        <div class="pigeon-image" alt="" style="background:url('{{ pigeon.urlPhoto }}') center center/cover;">
+        </div>
         <b>
           <p class="pigeon-title">{{ pigeon.prenomPigeon }}</p>
         </b>
