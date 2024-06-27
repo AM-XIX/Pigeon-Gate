@@ -34,10 +34,10 @@
     <p style="color: red;">{{ messageErrorRegister }}</p>
     {% endif %}
     <section>
-        <h1>A Propos</h1>
+        <h1>À PROPOS</h1>
         <div>
             <h2> Le projet</h2>
-            <p>Pigeon Gate sort tout droit de l’imagination débordante d’Anna Maria.
+            <p class="subtext">Pigeon Gate sort tout droit de l’imagination débordante d’Anna Maria.
                  Suite à l’obsession malsaine de Louise pour les pigeons, 
                  elle a imaginé un site où Louise pourrait exprimer son hyper-fixation sans 
                  aucune honte. Un véritable réseau social de pigeons, où chaque petit oiseau 
@@ -51,25 +51,26 @@
             <div id="about-members">
                 <div class = "about-us">
                     <div class="member-img" style="background:url(https://i.pinimg.com/736x/b9/c4/7e/b9c47ef70bff06613d397abfce02c6e7.jpg) center center/cover"></div> 
-                    <p>Louise</p>
-                    <p>Pigeon qui fume </p>
+                    <p class="subtext">Louise
+                    <br>aka Pigeon qui fume </p>
                 </div>
                 <div class="about-us">
                     <div class="member-img" style="background:url(https://images7.memedroid.com/images/UPLOADED295/65bb66a6876c0.jpeg) center center/cover"></div> 
-                    <p>Anna Maria</p>
-                    <p>Pigeon qui joie</p>
+                    <p class="subtext">Anna Maria
+                    <br>aka Pigeon qui joie</p>
                 </div>
                 <div class="about-us">
                     <div class="member-img" style="background:url(https://i.pinimg.com/564x/d0/f1/57/d0f157e24f15746be8372144f1d3d6dd.jpg) center center/cover"></div> 
-                    <p>Angèle</p>
-                    <p>Pigeon qui dodo</p>
+                    <p class="subtext">Angèle
+                    <br>aka Pigeon qui dodo</p>
                 </div>
             </div>
         </div>
 
 
-
+        <div id="explorer">
         <p><a href="{{ url_for('galery') }}">Explorer</a></p>
+        </div>
     </section>
     <a id="back-top" href="#top">&uarr; Revenir en haut &uarr;</a>
     <footer>

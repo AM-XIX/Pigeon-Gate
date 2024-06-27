@@ -115,7 +115,7 @@ nav a:hover {
 }
 
 /* ------ BUTTONS ------ */
-#trending-header a, #principe a, input[type="submit"] {
+#trending-header a, #principe a, #explorer a, input[type="submit"] {
     padding:.8vw 2vw;
     border:4px solid var(--secondary);
     border-radius:10px;
@@ -126,7 +126,7 @@ nav a:hover {
     letter-spacing: 1px;
 }
 
-#trending-header a:hover, #principe a:hover, input[type="submit"]:hover {
+#trending-header a:hover, #principe a:hover, #explorer a:hover, input[type="submit"]:hover {
     background-color: var(--secondary);
     color:white;
 }
