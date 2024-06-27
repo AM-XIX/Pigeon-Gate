@@ -6,12 +6,12 @@
     <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='./images/favicon.ico') }}">
     <title>Profil</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='./css/main.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='./css/welcome.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='./css/profile.css') }}">
 </head>
 
 <body>
     <header>
-        <h1>Pigeon Gate</h1>
+        <h1><a href="{{ url_for('accueil') }}">Pigeon Gate</a></h1>
         <hr>
     </header>
     <nav>
@@ -28,11 +28,13 @@
     </nav>
     <section>
         <form action="{{ url_for('editProfile') }}" method="post">
-        <p>Pseudo</p>
-        <textarea id="pseudo" name="pseudo">{{ user.pseudo }}</textarea>
-        <p>Biographie</p>
-            <textarea id="bio" name="bio">{{ user.bio }}</textarea>
-            <input type="submit" value="Modifier">
+
+            <div id="profile-all">
+                <p>Pseudo</p>
+                <textarea id="pseudo" name="pseudo">{{ user.pseudo }}</textarea>
+                <p>Biographie</p>
+                <textarea id="bio" name="bio">{{ user.bio }}</textarea>
+                <input type="submit" value="Modifier">
         </form>
         <img src="{{ url_for('static', filename='./images/' ~ user.typeProfilePicture ~ '.png') }}"
             alt="{{ user.typeProfilePicture }}" style="width:10%;">
@@ -43,11 +45,17 @@
                 <img src="{{ url_for('static', filename='images/' + profile + '.png') }}" alt="{{ profile }}"
                     style="width:5%;">
             </button>
+            </div>
         </form>
         {% endfor %}
-
-        
     </section>
+
+    <a id="back-top" href="#top">&uarr; Revenir en haut &uarr;</a>
+    <footer>
+        <p><a href="/about">The Pigeon Team</a></p>
+        <p><a href="https://github.com/AM-XIX/Pigeon-Gate" target="_blank">Pigeon Gate™</a></p>
+        <p>IMAC 2024 ©</p>
+    </footer>
 
 </body>
 

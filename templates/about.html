@@ -13,17 +13,16 @@
 <body>
     <header>
         <h1><a href="{{ url_for('accueil') }}">Pigeon Gate</a></h1>
-        <h2>Bienvenue sur Pigeon-Gate{% if pseudo %}, {{ pseudo }}{% else %}{% endif %} !</h2>
         <hr>
     </header>
     <nav>
         <div>
-            <li><a href="">the pigeons</a></li>
-            <li><a href="">à propos</a></li>
+            <li><a href="{{ url_for('galery') }}">the pigeons</a></li>
+            <li><a class="active-page" href="{{ url_for('about') }}">à propos</a></li>
         </div>
         <div>
             {% if not pseudo %}
-            <li><a href="{{ url_for('register') }}" class="active-page">S'inscrire</a></li>
+            <li><a href="{{ url_for('register') }}">S'inscrire</a></li>
             <li><a href="{{ url_for('login') }}">Se connecter</a></li>
             {% elif pseudo %}
             <li><a href="{{ url_for('profil') }}">Mon profil</a></li>
