@@ -285,3 +285,16 @@ def getPigeonByName(namePigeon):
     if pigeon:
         return pigeon[0]
     return None
+
+def getPigeonByNameNormalized(namePigeon):
+    mycursor = mydb.cursor()
+    if len(namePigeon) >= 3:
+        firstLetters = namePigeon[:3].lower() + "%"
+    else:
+        firstLetters = namePigeon.lower() + "%"
+    query = "SELECT * FROM Pigeon WHERE LOWER(prenomPigeon) LIKE %s"
+    mycursor.execute(query, (firstLetters,))
+    pigeon = mycursor.fetchone()
+    if pigeon:
+        return dataToPigeon([pigeon])
+    return None

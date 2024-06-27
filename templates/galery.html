@@ -38,7 +38,11 @@
     </div>
 
     <div>
-      <input type="text" placeholder="Search bar....">
+      {% if messageError %}
+      <p>{{ messageError }}</p>
+      {% endif %}
+      <input type="text" placeholder="Search name...." onkeyup="searchPigeon()" id="search">
+      <p id="minCharMessage" style="color: red; display: none;">Minimum 2 caractères.</p>
       <select name="cats" id="cat-select">
         <option value="">Catégories</option>
         {% for categorie in allCategories %}

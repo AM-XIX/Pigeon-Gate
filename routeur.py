@@ -23,24 +23,13 @@ def accueil():
     if model.mydb.is_connected():
         return render_template("welcome.html", pigeons=pigeonsBdd);
 
-@app.route("/register", methods=['GET', 'POST'])
-def register():
-    if request.method == 'POST' and 'pseudo' not in session:
-        pseudo = request.form['pseudo']
-        password = bcrypt.generate_password_hash(request.form['password']).decode('utf-8')
-        typeProfilePicture = request.form['typeProfilePicture']
-        if model.getUserbyPseudo(pseudo)!=None:
-            messageErrorRegister = "Pseudo déjà utilisé"
-            return render_template("register.html", messageErrorRegister=messageErrorRegister);
-        else:
-            session['pseudo'] = pseudo
-            model.newUser(pseudo, password, typeProfilePicture)
-            pigeonsBdd = model.getAllPigeons()
-            session['idUser'] = model.getUserbyPseudo(pseudo)['idUser']
-            allCategories = model.getAllCategories()
-            return render_template("galery.html", pigeons=pigeonsBdd, pseudo=pseudo, allCategories=allCategories);
-    else:
-        return render_template("register.html");
+@app.route("/about", methods=['GET'])
+def about():
+    if 'pseudo' not in session:
+        return render_template("about.html");
+    return render_template("about.html", pseudo=session['pseudo']);
+
+# User
 
 @app.route("/login", methods=['POST', 'GET'])
 def login():
@@ -62,33 +51,31 @@ def login():
     else:
         return render_template("login.html");
 
-
-@app.route("/add-pigeon", methods=['POST', 'GET'])
-def addPigeon():
-    if 'pseudo' not in session:
-        return render_template("login.html");
-    allCategories = model.getAllCategories()
-    if request.method == 'POST' and 'pseudo' in session:
-        idUser = session['idUser']
-        noteWalk = int(request.form['notewalk'])
-        noteVibe = int(request.form['notevibe'])
-        noteOriginalite = int(request.form['noteoriginalite'])
-        namePigeon = request.form['prenom']
-        model.addPigeon(namePigeon, request.form['couleur'], noteWalk, noteVibe, noteOriginalite, request.form['place'], request.form['urlPhoto'], idUser)
-        pigeonBdd = model.getAllPigeons()
-        pseudo = session['pseudo']
-        categories = request.form.getlist('categories')
-        model.addCategoryByCheckbox(namePigeon, categories)
-        return render_template("galery.html", pigeons=pigeonBdd, pseudo=pseudo, allCategories=allCategories);
-    else:
-        return render_template("newPigeon.html", allCategories=allCategories);
-
 @app.route("/logout", methods=['POST', 'GET'])
 def logout():
     session.clear()
     pigeonsBdd = model.getAllPigeons()
     allCategories = model.getAllCategories()
     return render_template("galery.html", pigeons=pigeonsBdd, allCategories=allCategories);
+
+@app.route("/register", methods=['GET', 'POST'])
+def register():
+    if request.method == 'POST' and 'pseudo' not in session:
+        pseudo = request.form['pseudo']
+        password = bcrypt.generate_password_hash(request.form['password']).decode('utf-8')
+        typeProfilePicture = request.form['typeProfilePicture']
+        if model.getUserbyPseudo(pseudo)!=None:
+            messageErrorRegister = "Pseudo déjà utilisé"
+            return render_template("register.html", messageErrorRegister=messageErrorRegister);
+        else:
+            session['pseudo'] = pseudo
+            model.newUser(pseudo, password, typeProfilePicture)
+            pigeonsBdd = model.getAllPigeons()
+            session['idUser'] = model.getUserbyPseudo(pseudo)['idUser']
+            allCategories = model.getAllCategories()
+            return render_template("galery.html", pigeons=pigeonsBdd, pseudo=pseudo, allCategories=allCategories);
+    else:
+        return render_template("register.html");
 
 @app.route("/profil", methods=['GET'])
 def profil():
@@ -99,20 +86,7 @@ def profil():
     otherProfilePicture.remove(user['typeProfilePicture'])
     page = request.args.get('page', default=0, type=int)
     lastPigeons = model.getLastPigeonsByUser(user['idUser'], page)
-    return render_template("profile.html", user=user, lastPigeons=lastPigeons, page=page)
-
-@app.route("/loadMorePigeons", methods=['GET'])
-def loadMorePigeons():
-    if 'pseudo' not in session:
-        return render_template("login.html")
-    idUser = session['idUser']
-    page = request.args.get('page', default=0, type=int)
-    try:
-        morePigeons = model.getLastPigeonsByUser(idUser, page)
-        morePigeonsJson = [{"id": p['idPigeon'], "prenomPigeon": p['prenomPigeon'], "color": p['color'], "place": p['place'], "urlPhoto": p['urlPhoto']} for p in morePigeons]
-        return jsonify(morePigeonsJson)
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
+    return render_template("profile.html", user=user, lastPigeons=lastPigeons, page=page);
     
 @app.route("/edit-profile", methods=['POST', 'GET'])
 def editProfile():
@@ -143,6 +117,29 @@ def editProfile():
     return render_template("profileEdit.html", user=user, otherProfilePicture=otherProfilePicture)
 
 
+# Pigeon
+
+@app.route("/add-pigeon", methods=['POST', 'GET'])
+def addPigeon():
+    if 'pseudo' not in session:
+        return render_template("login.html");
+    allCategories = model.getAllCategories()
+    if request.method == 'POST' and 'pseudo' in session:
+        idUser = session['idUser']
+        noteWalk = int(request.form['notewalk'])
+        noteVibe = int(request.form['notevibe'])
+        noteOriginalite = int(request.form['noteoriginalite'])
+        namePigeon = request.form['prenom']
+        model.addPigeon(namePigeon, request.form['couleur'], noteWalk, noteVibe, noteOriginalite, request.form['place'], request.form['urlPhoto'], idUser)
+        pigeonBdd = model.getAllPigeons()
+        pseudo = session['pseudo']
+        categories = request.form.getlist('categories')
+        model.addCategoryByCheckbox(namePigeon, categories)
+        return render_template("galery.html", pigeons=pigeonBdd, pseudo=pseudo, allCategories=allCategories);
+    else:
+        return render_template("newPigeon.html", allCategories=allCategories);
+
+
 @app.route("/galery", methods=['GET'])
 def galery():
     if 'pseudo' not in session:
@@ -152,12 +149,6 @@ def galery():
     pigeons = model.getAllPigeons()
     allCategories = model.getAllCategories()
     return render_template("galery.html", pigeons=pigeons, pseudo=pseudo, allCategories=allCategories);
-
-@app.route("/about", methods=['GET'])
-def about():
-    if 'pseudo' not in session:
-        return render_template("about.html");
-    return render_template("about.html", pseudo=session['pseudo']);
 
 @app.route("/pigeon/<idPigeon>", methods=['GET'])
 def cardPigeon(idPigeon):
@@ -208,6 +199,19 @@ def category(idCategory):
     allCategories = model.getAllCategories()
     return render_template("galery.html", pigeons=pigeons, pseudo=pseudo, allCategories=allCategories);
 
+@app.route("/galery/search-pigeon/<string:namePigeon>", methods=['GET'])
+def searchPigeon(namePigeon):
+    if 'pseudo' not in session:
+        pseudo = None
+    else:
+        pseudo = session['pseudo']
+    pigeonsSearch = model.getPigeonByNameNormalized(namePigeon)
+    allCategories = model.getAllCategories()
+    if pigeonsSearch == [] or pigeonsSearch == None:
+        pigeonsSearch = model.getAllPigeons()
+        messageError = "Aucun pigeon trouvé avec ce nom"
+        return render_template("galery.html", pigeons=pigeonsSearch, pseudo=pseudo, allCategories=allCategories, messageError=messageError);
+    return render_template("galery.html", pigeons=pigeonsSearch, pseudo=pseudo, allCategories=allCategories);
 
 # JSON
 
@@ -230,6 +234,19 @@ def worstPigeon():
             return jsonify({'error': 'No pigeon found'}), 404
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+
+@app.route("/loadMorePigeons", methods=['GET'])
+def loadMorePigeons():
+    if 'pseudo' not in session:
+        return render_template("login.html")
+    idUser = session['idUser']
+    page = request.args.get('page', default=0, type=int)
+    try:
+        morePigeons = model.getLastPigeonsByUser(idUser, page)
+        morePigeonsJson = [{"id": p['idPigeon'], "prenomPigeon": p['prenomPigeon'], "color": p['color'], "place": p['place'], "urlPhoto": p['urlPhoto']} for p in morePigeons]
+        return jsonify(morePigeonsJson)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
     
 @app.route('/bullyPigeon', methods=['GET'])
 def bullyPigeon():
