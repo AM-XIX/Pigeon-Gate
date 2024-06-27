@@ -17,8 +17,10 @@ def welcome():
 
 @app.route("/accueil", methods=['GET', 'POST'])
 def accueil():
+    pigeonsBdd = model.getTrendingPigeons()
+    if 'pseudo' in session:
+        return render_template("welcome.html", pigeons=pigeonsBdd, pseudo=session['pseudo']);
     if model.mydb.is_connected():
-        pigeonsBdd = model.getTrendingPigeons()
         return render_template("welcome.html", pigeons=pigeonsBdd);
 
 @app.route("/register", methods=['GET', 'POST'])
