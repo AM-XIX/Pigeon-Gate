@@ -40,12 +40,12 @@
     <div>
       <input type="text" placeholder="Search bar....">
       <select name="cats" id="cat-select">
-        <option value="">Catégories</option>
-        {% for categorie in allCategories %}
-        <option value="{{ categorie }}">{{ categorie }}</option>
-        {% endfor %}
+          <option value="">Catégories</option>
+          {% for categorie in allCategories %}
+          <option value="{{ categorie.idCat }}">{{ categorie.nom }}</option>
+          {% endfor %}
       </select>
-    </div>
+  </div>
 
     <div class="cards-container">
       {% for pigeon in pigeons %}

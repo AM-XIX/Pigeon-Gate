@@ -155,6 +155,21 @@ def getCardPigeonsById(idPigeon):
     }
     return pigeon
 
+def addRatePigeon(idPigeon, rateWalk, rateVibe, rateOriginality):
+    mycursor = mydb.cursor()
+    pigeon = getCardPigeonsById(idPigeon)
+    rateWalk = (pigeon['rateWalk'] + rateWalk) / 2
+    rateVibe = (pigeon['rateVibe'] + rateVibe) / 2
+    rateOriginality = (pigeon['rateOriginality'] + rateOriginality) / 2
+    mycursor.execute("UPDATE Pigeon SET rateWalk = %s, rateVibe = %s, rateOriginality = %s WHERE idPigeon = %s", (rateWalk, rateVibe, rateOriginality, idPigeon))
+    mydb.commit()
+
+def getTrendingPigeons():
+    mycursor = mydb.cursor()
+    mycursor.execute("SELECT * FROM Pigeon ORDER BY nbLike DESC LIMIT 4")
+    trendingPigeons = mycursor.fetchall()
+    return dataToPigeon(trendingPigeons)
+
 
 # Comment
 
@@ -191,39 +206,36 @@ def getFourRandomPigeons(currentIdPigeon):
     fourRandomPigeons = mycursor.fetchall()
     return dataToPigeon(fourRandomPigeons)
 
-def addRatePigeon(idPigeon, rateWalk, rateVibe, rateOriginality):
-    mycursor = mydb.cursor()
-    pigeon = getCardPigeonsById(idPigeon)
-    rateWalk = (pigeon['rateWalk'] + rateWalk) / 2
-    rateVibe = (pigeon['rateVibe'] + rateVibe) / 2
-    rateOriginality = (pigeon['rateOriginality'] + rateOriginality) / 2
-    mycursor.execute("UPDATE Pigeon SET rateWalk = %s, rateVibe = %s, rateOriginality = %s WHERE idPigeon = %s", (rateWalk, rateVibe, rateOriginality, idPigeon))
-    mydb.commit()
 
-def getTrendingPigeons():
-    mycursor = mydb.cursor()
-    mycursor.execute("SELECT * FROM Pigeon ORDER BY nbLike DESC LIMIT 4")
-    trendingPigeons = mycursor.fetchall()
-    return dataToPigeon(trendingPigeons)
-
-def getAllCategories():
-    mycursor = mydb.cursor()
-    mycursor.execute("SELECT nom FROM Categorie")
-    categories = mycursor.fetchall()
-    categories = [categorie[0] for categorie in categories] # transfo tuples
-    return categories
+# Category
 
 def getIDCategoryByName(category):
     mycursor = mydb.cursor()
     mycursor.execute("SELECT idCat FROM Categorie WHERE nom = %s", (category,))
-    idCat = mycursor.fetchone()
-    return idCat[0]
+    result = mycursor.fetchone()
+    if result:
+        return result[0]
+    return None
 
-def getPigeonsByCategory(category):
+
+def getAllCategories():
+    categoriesList = []
     mycursor = mydb.cursor()
-    idCat = getIDCategoryByName(category)
-    query = "SELECT * FROM Categorie INNER JOIN Categorise ON Categorise.idCat = Categorie.idCat INNER JOIN Pigeon ON Categorise.idPigeon = Pigeon.idPigeon WHERE Categorie.idCat = %s"
-    mycursor.execute(query, (idCat,))
+    mycursor.execute("SELECT nom FROM Categorie")
+    categories = mycursor.fetchall()
+    
+    for category in categories:
+        category_dict = {
+            "nom": category[0],
+            "idCat": getIDCategoryByName(category[0])
+        }
+        categoriesList.append(category_dict)
+    return categoriesList
+
+
+def getPigeonsByCategory(idcategory):
+    mycursor = mydb.cursor()
+    query = "SELECT * FROM Pigeon INNER JOIN Categorise ON Categorise.idPigeon = Pigeon.idPigeon INNER JOIN Categorie ON Categorie.idCat = Categorise.idCat WHERE Categorie.idCat = %s"
+    mycursor.execute(query, (idcategory,))
     pigeons = mycursor.fetchall()
-    print(pigeons)
     return dataToPigeon(pigeons)

@@ -188,8 +188,8 @@ def addRate(idPigeon):
     randomPigeons = model.getFourRandomPigeons(idPigeon)
     return render_template("cardPigeon.html", pigeon=model.getCardPigeonsById(idPigeon), user=model.getUserbyId(idUser), comments=model.getCommentsByIdPigeon(idPigeon, idUser), randomPigeons=randomPigeons)
 
-@app.route("/galery/<string:category>", methods=['GET'])
-def category(category):
+@app.route("/galery/<string:idCategory>", methods=['GET'])
+def category(idCategory):
     if 'pseudo' not in session:
         pseudo = None
     else:
@@ -197,7 +197,8 @@ def category(category):
     if category == None:
         pigeons = model.getAllPigeons()
     else:
-        pigeons = model.getPigeonsByCategory(category)
+        pigeons = model.getPigeonsByCategory(idCategory)
+        print(pigeons)
     allCategories = model.getAllCategories()
     return render_template("galery.html", pigeons=pigeons, pseudo=pseudo, allCategories=allCategories);
 
