@@ -1,0 +1,17 @@
+.about-us{
+   
+}
+
+.member-img {
+    width:23vw;
+    height:46vh;
+}
+
+#about-members{
+    display:flex;
+    justify-content: space-between;
+}
+
+section{
+    text-align: center;
+}
