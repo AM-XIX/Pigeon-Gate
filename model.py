@@ -203,9 +203,10 @@ def getWorstPigeon():
 
 # Comment
 
-def dataToComment(datas, pseudoUser):
+def dataToComment(datas):
     comments = []
     for comment in datas:
+        pseudoUser = getUserbyId(comment[3])['pseudo']
         comment = {
             "idComment": comment[0],
             "textCom": comment[1],
@@ -222,8 +223,7 @@ def getCommentsByIdPigeon(idPigeon, idUser):
     query = "SELECT * FROM commentaire WHERE idPigeon = %s";
     mycursor.execute(query, (idPigeon,))
     comments = mycursor.fetchall()
-    user = getUserbyId(idUser)
-    return dataToComment(comments, user['pseudo'])
+    return dataToComment(comments)
 
 def addComment(textCom, idUser, idPigeon):
     mycursor = mydb.cursor()

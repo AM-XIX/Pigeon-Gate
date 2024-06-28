@@ -104,9 +104,11 @@
             <h4>Derniers commentaires</h4>
             <div>
                 {% for comment in comments %}
-                <p>{{ comment.pseudoUser }}</p>
-                <p>{{ comment.textCom }}</p>
-                <p>Like : {{ comment.nbLike }}</p>
+                <div class="comment">
+                    <p id="commentPseudo">{{ comment.pseudoUser }}</p>
+                    <p>{{ comment.textCom }}</p>
+                    <p style="text-align: right;"><span>{{ comment.nbLike }} ❤️</span></p>
+                </div>
                 {% endfor %}
             </div>
             {% if userConnected.pseudo %}
@@ -139,7 +141,7 @@
                 {% endfor %}
             </div>
             <div id="explorer">
-                <p><a class="call-to-action" href="{{ url_for('galery') }}">Explorer</a>"</p>
+                <p><a class="call-to-action" href="{{ url_for('galery') }}">Explorer</a></p>
             </div>
         </div>
     </section>
