@@ -33,23 +33,27 @@ def about():
 
 @app.route("/login", methods=['POST', 'GET'])
 def login():
-    if request.method == 'POST' and 'pseudo' not in session:
+    if request.method == 'POST':
+        if 'pseudo' in session:
+            messageErrorLogin = "Vous êtes déjà connecté"
+            return render_template("login.html", messageErrorLogin=messageErrorLogin)
         pseudo = request.form['pseudo']
         password = request.form['password']
+        user = model.getUserbyPseudo(pseudo)
+        if user is None:
+            messageErrorLogin = "Pseudo ou mot de passe incorrect"
+            return render_template("login.html", messageErrorLogin=messageErrorLogin)
         if model.checkLogin(pseudo, password):
-            session['idUser'] = int(model.getUserbyPseudo(pseudo)['idUser'])
+            session['idUser'] = int(user['idUser'])
             session['pseudo'] = pseudo
             pigeonsBdd = model.getAllPigeons()
             allCategories = model.getAllCategories()
-            return render_template("galery.html", pigeons=pigeonsBdd, pseudo=pseudo, allCategories=allCategories);
-        elif model.getUserbyPseudo(pseudo)==None:
+            return render_template("galery.html", pigeons=pigeonsBdd, pseudo=pseudo, allCategories=allCategories)
+        else:
             messageErrorLogin = "Pseudo ou mot de passe incorrect"
-            return render_template("login.html", messageErrorLogin=messageErrorLogin);
-        elif session['pseudo'] != None:
-            messageErrorLogin = "Vous êtes déjà connecté"
-            return render_template("login.html", messageErrorLogin=messageErrorLogin);
-    else:
-        return render_template("login.html");
+            return render_template("login.html", messageErrorLogin=messageErrorLogin)
+    return render_template("login.html")
+
 
 @app.route("/logout", methods=['POST', 'GET'])
 def logout():
