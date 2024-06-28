@@ -171,7 +171,11 @@ def addComment(idPigeon):
     model.addComment(textCom, idUser, idPigeon)
     showCommentForm = request.args.get('showCommentForm', 'False') == 'True'
     randomPigeons = model.getFourRandomPigeons(idPigeon)
-    return render_template("cardPigeon.html", pigeon=model.getCardPigeonsById(idPigeon), user=model.getUserbyId(idUser), comments=model.getCommentsByIdPigeon(idPigeon, idUser), randomPigeons=randomPigeons, showCommentForm=showCommentForm)
+    if 'idUser' not in session:
+        userConnected = None
+        return render_template("cardPigeon.html", pigeon=model.getCardPigeonsById(idPigeon), user=model.getUserbyId(idUser), comments=model.getCommentsByIdPigeon(idPigeon, idUser), randomPigeons=randomPigeons, userConnected=userConnected, showCommentForm=showCommentForm)
+    userConnected = model.getUserbyId(session['idUser'])
+    return render_template("cardPigeon.html", pigeon=model.getCardPigeonsById(idPigeon), user=model.getUserbyId(idUser), comments=model.getCommentsByIdPigeon(idPigeon, idUser), randomPigeons=randomPigeons, userConnected=userConnected, showCommentForm=showCommentForm)
 
 @app.route("/pigeon/<int:idPigeon>/rate", methods=['POST'])
 def addRate(idPigeon):
@@ -251,3 +255,15 @@ def loadMorePigeons():
 @app.route('/bullyPigeon', methods=['GET'])
 def bullyPigeon():
     return render_template("worstPigeon.html");
+
+@app.route('/likePigeon', methods=['POST'])
+def likePigeon():
+    if 'idUser' not in session:
+        return redirect(url_for('login'))
+    idPigeon = request.form['idPigeon']
+    model.likePigeon(idPigeon)
+    return redirect(url_for('cardPigeon', idPigeon=idPigeon))
+
+
+if __name__ == "__main__":
+    app.run(debug=True)

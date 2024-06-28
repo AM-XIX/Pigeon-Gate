@@ -41,6 +41,9 @@ def getUserbyId(idUser):
     mycursor = mydb.cursor()
     mycursor.execute("SELECT * FROM User WHERE idUser = %s", (idUser,))
     userData = mycursor.fetchall()
+    idUser = userData[0][0]
+    if not userData:
+        return None
     user = {
         "idUser": userData[0][0],
         "pseudo": userData[0][1],
@@ -298,3 +301,19 @@ def getPigeonByNameNormalized(namePigeon):
     if pigeon:
         return dataToPigeon([pigeon])
     return None
+
+def getPigeonById(idPigeon):
+    mycursor = mydb.cursor()
+    query = "SELECT * FROM Pigeon WHERE idPigeon = %s"
+    mycursor.execute(query, (idPigeon,))
+    pigeon = mycursor.fetchone()
+    if pigeon:
+        return dataToPigeon([pigeon])
+    return None
+
+def likePigeon(idPigeon):
+    mycursor = mydb.cursor()
+    pigeon = getCardPigeonsById(idPigeon)
+    nbLike = pigeon['nbLike'] + 1
+    mycursor.execute("UPDATE Pigeon SET nbLike = %s WHERE idPigeon = %s", (nbLike, idPigeon))
+    mydb.commit()
