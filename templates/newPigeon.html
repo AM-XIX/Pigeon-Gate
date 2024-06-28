@@ -6,76 +6,106 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='./images/favicon.ico') }}">
     <title>Ajouter un pigeon</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='./css/main.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='./css/newPigeon.css') }}">
 </head>
 
 <body>
-    <h1>Ajouter un pigeon! </h1>
-    <form action="/add-pigeon" method="post">
-        <label for="prenom">Prénom</label><br>
-        <input type="text" name="prenom" id="prenom" required><br>
+    <header>
+        <h1><a href="{{ url_for('accueil') }}">Pigeon Gate</a></h1>
+        <hr>
+    </header>
+    <nav>
+        <div>
+            <li><a class="active-page" href="{{ url_for('galery') }}">the pigeons</a></li>
+            <li><a href="{{ url_for('about') }}">à propos</a></li>
+        </div>
+        <div>
+            {% if not pseudo %}
+            <li><a href="{{ url_for('register') }}">S'inscrire</a></li>
+            <li><a href="{{ url_for('login') }}">Se connecter</a></li>
+            {% elif pseudo %}
+            <li><a href="{{ url_for('profil') }}">Mon profil</a></li>
+            <li><a href="{{ url_for('logout') }}">Se déconnecter</a></li>
+            {% endif %}
+        </div>
+    </nav>
+    <section>
+        <h1>Ajouter un pigeon! </h1>
+        <form action="/add-pigeon" method="post">
+            <div id="text-inputs">
+                <div class="input-field">
+                    <label for="prenom">Prénom</label><br>
+                    <input type="text" name="prenom" id="prenom" required>
+                </div>
+                <div class="input-field">
+                    <label for="couleur">Couleur</label><br>
+                    <input type="text" name="couleur" id="couleur" required>
+                </div>
+                <div class="input-field">
+                    <label for="place">Où a-t-il été aperçu?</label><br>
+                    <input type="text" name="place" id="place" required>
+                </div>
+                <div class="input-field">
+                    <label for="urlPhoto">Url de la photo</label><br>
+                    <input type="text" name="urlPhoto" id="urlPhoto" required>
+                </div>
+            </div>
 
-        <label for="couleur">Couleur</label><br>
-        <input type="text" name="couleur" id="couleur" required><br>
+            <p>Note son originalité:</p>
+            <div class="rate-range">
+                <label for="1">0</label>
+                <input type="radio" id="1" name="noteoriginalite" value="1">
+                <input type="radio" id="2" name="noteoriginalite" value="2">
+                <input type="radio" id="3" name="noteoriginalite" value="3">
+                <input type="radio" id="4" name="noteoriginalite" value="4">
+                <input type="radio" id="5" name="noteoriginalite" value="5">
+                <label for="5">5</label>
+            </div>
 
-        <label for="place">Où a-t-il été aperçu?</label><br>
-        <input type="text" name="place" id="place" required><br>
+            <p>Note sa démarche:</p>
+            <div class="rate-range">
+                <label for="1">0</label>
+                <input type="radio" id="1" name="notewalk" value="1">
+                <input type="radio" id="2" name="notewalk" value="2">
+                <input type="radio" id="3" name="notewalk" value="3">
+                <input type="radio" id="4" name="notewalk" value="4">
+                <input type="radio" id="5" name="notewalk" value="5">
+                <label for="5">5</label>
+            </div>
 
-        <p>Note son originalité:</p>
-        <input type="radio" id="0" name="noteoriginalite" value="0">
-        <label for="0">0</label>
-        <input type="radio" id="1" name="noteoriginalite" value="1">
-        <label for="1">1</label>
-        <input type="radio" id="2" name="noteoriginalite" value="2">
-        <label for="2">2</label>
-        <input type="radio" id="3" name="noteoriginalite" value="3">
-        <label for="3">3</label>
-        <input type="radio" id="4" name="noteoriginalite" value="4">
-        <label for="4">4</label>
-        <input type="radio" id="5" name="noteoriginalite" value="5">
-        <label for="5">5</label>
+            <p>Note sa vibe:</p>
+            <div class="rate-range">
+                <label for="1">0</label>
+                <input type="radio" id="1" name="notevibe" value="1">
+                <input type="radio" id="2" name="notevibe" value="2">
+                <input type="radio" id="3" name="notevibe" value="3">
+                <input type="radio" id="4" name="notevibe" value="4">
+                <input type="radio" id="5" name="notevibe" value="5">
+                <label for="5">5</label>
+            </div>
 
-        <p>Note sa démarche:</p>
-        <input type="radio" id="0" name="notewalk" value="0">
-        <label for="0">0</label>
-        <input type="radio" id="1" name="notewalk" value="1">
-        <label for="1">1</label>
-        <input type="radio" id="2" name="notewalk" value="2">
-        <label for="2">2</label>
-        <input type="radio" id="3" name="notewalk" value="3">
-        <label for="3">3</label>
-        <input type="radio" id="4" name="notewalk" value="4">
-        <label for="4">4</label>
-        <input type="radio" id="5" name="notewalk" value="5">
-        <label for="5">5</label>
+            <p>A quelle catégorie appartient-il?</p>
+            <div id="category-list">
+                {% for categorie in allCategories %}
+                <div class="category-option">
+                    <input type="checkbox" id="{{ categorie.idCat }}" name="categories" value="{{ categorie.idCat }}">
+                    <label for="{{ categorie.idCat }}">{{ categorie.nom }}</label>
+                </div>
+                {% endfor %}
+            </div>
+            <input type="submit" value="Poster un pigeon">
 
-        <p>Note sa vibe:</p>
-        <input type="radio" id="0" name="notevibe" value="0">
-        <label for="0">0</label>
-        <input type="radio" id="1" name="notevibe" value="1">
-        <label for="1">1</label>
-        <input type="radio" id="2" name="notevibe" value="2">
-        <label for="2">2</label>
-        <input type="radio" id="3" name="notevibe" value="3">
-        <label for="3">3</label>
-        <input type="radio" id="4" name="notevibe" value="4">
-        <label for="4">4</label>
-        <input type="radio" id="5" name="notevibe" value="5">
-        <label for="5">5</label>
+            <br>
 
-        <p>Url de la photo</p>
-        <input type="text" name="urlPhoto" id="urlPhoto" required>
-        <br>
-
-        <p>A quelle catégorie appartient-il?</p>
-        {% for categorie in allCategories %}
-        <input type="checkbox" id="{{ categorie.idCat }}" name="categories" value="{{ categorie.idCat }}">
-        <label for="{{ categorie.idCat }}">{{ categorie.nom }}</label>
-        {% endfor %}
-        <input type="submit" value="Poster un pigeon">
-
-        <br>
-        
-    </form>
+        </form>
+    </section>
+    <a id="back-top" href="#top">&uarr; Revenir en haut &uarr;</a>
+    <footer>
+        <p><a href="/about">The Pigeon Team</a></p>
+        <p><a href="https://github.com/AM-XIX/Pigeon-Gate" target="_blank">Pigeon Gate™</a></p>
+        <p>IMAC 2024 ©</p>
+    </footer>
 </body>
 
 </html>

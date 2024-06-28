@@ -1,0 +1,65 @@
+form {
+    width:75%;
+    background-color: white;
+    border:3px solid var(--secondary);
+    border-radius:5px;
+    padding:2.5vh 3vw;
+    transform:rotate(-.5deg);
+}
+
+form p {
+    margin:0;
+    margin-top:2vh;
+    font-size:1.5rem;
+}
+
+form p:first-of-type {
+    margin-top:5vh;
+}
+
+form p:last-of-type {
+    margin-top:5vh;
+}
+
+#text-inputs {
+    width:75%;
+    display:flex;
+    flex-wrap: wrap;
+    gap:15px 30px;
+    margin-top:2vh;
+}
+
+.rate-range {
+    display:flex;
+    width:12vw;
+    justify-content:space-between;
+    align-items: baseline;
+    font-family:var(--title);
+}
+
+.rate-range input {
+    cursor:pointer;
+    background-color:transparent;
+}
+
+input[type="radio"]:focus, input[type="checkbox"]:focus {
+    box-shadow:none;
+}
+
+.rate-range label {
+    font-size:1rem;
+}
+
+#category-list {
+    display:flex;
+    flex-wrap: wrap;
+    gap:10px 20px;
+    margin-bottom:8vh;
+}
+
+.category-option {
+    display:flex;
+    align-items: baseline;
+    gap:0px 5px;
+    cursor: pointer;
+}

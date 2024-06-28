@@ -27,27 +27,31 @@
         </div>
     </nav>
     <section>
-        <form action="{{ url_for('editProfile') }}" method="post">
-
-            <div id="profile-all">
-                <p>Pseudo</p>
-                <textarea id="pseudo" name="pseudo">{{ user.pseudo }}</textarea>
-                <p>Biographie</p>
-                <textarea id="bio" name="bio">{{ user.bio }}</textarea>
-                <input type="submit" value="Modifier">
-        </form>
-        <img src="{{ url_for('static', filename='./images/' ~ user.typeProfilePicture ~ '.png') }}"
-            alt="{{ user.typeProfilePicture }}" style="width:10%;">
-        {% for profile in otherProfilePicture %}
-        <form action="/edit-profile" method="post">
-            <input type="hidden" name="typeProfilePicture" value="{{ profile }}">
-            <button type="submit">
-                <img src="{{ url_for('static', filename='images/' + profile + '.png') }}" alt="{{ profile }}"
-                    style="width:5%;">
-            </button>
+        <h3>Modifie ton profil</h3>
+        <div id="profile-all">
+            <div id="pp-selection">
+                <img src="{{ url_for('static', filename='./images/' ~ user.typeProfilePicture ~ '.png') }}"
+                    alt="{{ user.typeProfilePicture }}">
+                <div id="pp-options">
+                    {% for profile in otherProfilePicture %}
+                    <form action="/edit-profile" method="post">
+                        <input type="hidden" name="typeProfilePicture" value="{{ profile }}">
+                        <button type="submit">
+                            <img src="{{ url_for('static', filename='images/' + profile + '.png') }}"
+                                alt="{{ profile }}">
+                        </button>
+                    </form>
+                    {% endfor %}
+                </div>
             </div>
-        </form>
-        {% endfor %}
+            <form id="edit-text" action="{{ url_for('editProfile') }}" method="post">
+                <label for="pseudo">Pseudo</label>
+                <input type="text" id="pseudo" name="pseudo" value="{{ user.pseudo }}">
+                <label for="bio">Biographie</label>
+                <textarea rows="3" cols="25" id="bio" name="bio">{{ user.bio }}</textarea><br>
+                <input type="submit" value="Modifier">
+            </form>
+        </div>
     </section>
 
     <a id="back-top" href="#top">&uarr; Revenir en haut &uarr;</a>

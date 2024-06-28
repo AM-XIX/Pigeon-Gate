@@ -1,3 +1,5 @@
+
+/* ====== PROFILE CARD ====== */
 #profile-all {
     display:flex;
     margin-top:8vh;
@@ -19,8 +21,8 @@
     }
 }
 
-#profile-all > img {
-    height:30vh;
+#profile-all > img, #pp-selection >img {
+    width:20vw;
     border:4px solid var(--secondary);
     border-radius:5px;
 }
@@ -63,6 +65,8 @@ h4+p {
     margin:0;
 }
 
+/* —————— Edit button —————— */
+
 #edit-button img {
     margin-left:1.5vw;
     width:2.6vw;
@@ -73,6 +77,7 @@ h4+p {
     margin-top:-1vh;
 }
 
+/* —————— Load more —————— */
 #load-more {
     width:100%;
     margin-top:2vh;
@@ -89,4 +94,59 @@ h4+p {
 
 #load-more:hover {
     text-decoration: none;
+}
+
+/* ================================= */
+/* ============ ON EDIT ============ */
+#edit-text {
+    margin-left:3vw;
+}
+
+form h4 {
+    font-size:2rem;
+}
+
+label {
+    font-size:1.8rem;
+}
+
+input, textarea {
+    margin-top: 0;
+}
+
+input[type="text"] {
+    padding-right:2vw;
+    width:10vw;
+}
+
+textarea {
+    resize:none;
+    width:25vw;
+}
+
+input[type="submit"] {
+    margin-top: 2vh;
+    margin-right:1vw;
+    padding: .5vw 1.5vw;
+    background-color: transparent;
+    color: var(--secondary);
+    cursor: pointer;
+}
+
+/* —————— Profile photo selection —————— */
+#pp-options {
+    width:20vw;
+    display:flex;
+    justify-content: space-evenly;
+}
+
+#pp-selection button {
+    margin-top:.5vh;
+    background-color: transparent;
+    border:none;
+}
+
+#pp-selection form img {
+    border:3px solid var(--secondary);
+    width:100%;
 }

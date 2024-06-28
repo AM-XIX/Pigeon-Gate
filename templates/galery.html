@@ -33,7 +33,7 @@
 
   <section id="trending">
     <div id="trending-header">
-      <h3>THE PIGEONS</h3>
+      <h3>The Pigeons</h3>
       <a href="{{ url_for('addPigeon') }}">Ajouter un pigeon</a>
     </div>
 
@@ -41,14 +41,19 @@
       {% if messageError %}
       <p>{{ messageError }}</p>
       {% endif %}
-      <input type="text" placeholder="Search name...." onkeyup="searchPigeon()" id="search">
-      <p id="minCharMessage" style="color: red; display: none;">Minimum 2 caractères.</p>
-      <select name="cats" id="cat-select">
-        <option value="">Catégories</option>
-        {% for categorie in allCategories %}
-        <option value="{{ categorie.idCat }}">{{ categorie.nom }}</option>
-        {% endfor %}
-      </select>
+
+      <div id="filter-bar">
+        <div>
+          <input type="text" placeholder="Cherche un nom...." onkeyup="searchPigeon()" id="search">
+          <p id="minCharMessage" style="color: var(--secondary); opacity: 0;">Minimum 2 caractères.</p>
+        </div>
+        <select name="cats" id="cat-select">
+          <option value="">Catégories</option>
+          {% for categorie in allCategories %}
+          <option value="{{ categorie.idCat }}">{{ categorie.nom }}</option>
+          {% endfor %}
+        </select>
+      </div>
     </div>
 
     <div class="cards-container">

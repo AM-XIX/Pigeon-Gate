@@ -20,7 +20,7 @@ function searchPigeon() {
     if (searchValue && searchValue.length > 1) {
       window.location.href = "/galery/search-pigeon/" + searchValue;
     } else {
-      document.getElementById("minCharMessage").style.display = "block";
+      document.getElementById("minCharMessage").style.opacity = "100%";
     }
   }
 }
