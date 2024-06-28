@@ -5,7 +5,6 @@ An unique Pigeon experience using Flask and JavaScript created by Anna Maria, Lo
 Pigeon Gate is the result of Anna Maria's over-active imagination. Following Louise's unhealthy obsession with pigeons, she imagined a site where Louise could express her hyper-fixation without shame If you're wondering what Angèle has to do with it, she's decided to join Anna Maria and Louise's team to add her flavour to their somewhat... unusual idea.
 <p align="center">
 <img src="https://github.com/AM-XIX/Pigeon-Gate/assets/77757761/2657631d-29f2-41db-b31b-6608d4c73802" alt="Squad" width="300"/>
-<p align="center">
 
 ## CONCEPT
  |      | Actions     |
@@ -20,3 +19,10 @@ Pigeon Gate is the result of Anna Maria's over-active imagination. Following Lou
 <img src="https://github.com/AM-XIX/Pigeon-Gate/assets/77757761/31d6580c-e14b-4aca-a2d1-441ebebfab87" alt="Slide3" width="1000"/><br><br>
 <img src="https://github.com/AM-XIX/Pigeon-Gate/assets/77757761/287b1129-401d-4c66-ae9d-bdaf61915568" alt="Slide4" width="1000"/><br><br>
 <p align="center">
+
+## Technical aspects
+
+**Database**
+<br>
+<p align="center">
+<img width="893" alt="Capture d’écran 2024-06-28 à 20 19 14" src="https://github.com/AM-XIX/Pigeon-Gate/assets/77757761/bb8ae74f-54aa-47c3-b4f6-40968519e467">
