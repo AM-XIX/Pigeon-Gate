@@ -6,7 +6,7 @@
     <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='./images/favicon.ico') }}">
     <title>Profil</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='./css/main.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='./css/welcome.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='./css/cardPigeon.css') }}">
 </head>
 
 <body>
@@ -16,7 +16,7 @@
     </header>
     <nav>
         <div>
-            <li><a href="{{ url_for('galery') }}">the pigeons</a></li>
+            <li><a class="active-page" href="{{ url_for('galery') }}">the pigeons</a></li>
             <li><a href="{{ url_for('about') }}">à propos</a></li>
         </div>
         <div>
@@ -30,19 +30,34 @@
         </div>
     </nav>
     <section>
-        <img src="{{ pigeon.urlPhoto }}" alt="" style="width:30%">
-        <h1>{{ pigeon.prenomPigeon }} - {{ pigeon.place }}</h1>
-        <p>Adopté par : {{ user.pseudo }}</p>
-        <p>Originalité : {{ pigeon.rateOriginality }}</p>
-        <p>Démarche : {{ pigeon.rateWalk }}</p>
-        <p>Vibe : {{ pigeon.rateVibe }}</p>
-        {% if not userConnected %}
-        <p>Connectez-vous pour noter ce pigeon</p>
-        {% elif userConnected %}
-        <a href="{{ url_for('cardPigeon', idPigeon=pigeon.idPigeon, showCommentForm=True) }}">Noter</a>
-        {% endif %}
+        <div id="pigeon-info">
+            <img src="{{ pigeon.urlPhoto }}" alt="">
+            <div id="pigeon-text">
+                <h3>{{ pigeon.prenomPigeon }} <span>- {{ pigeon.place }}</span></h3>
+                <p>Adopté par : {{ user.pseudo }}</p>
+                <div id="all-rates">
+                    <div class="medium-rate">
+                        <p>Originalité</p>
+                        <p>{{ pigeon.rateOriginality }}</p>
+                    </div>
+                    <div class="medium-rate">
+                        <p>Démarche</p>
+                        <p>{{ pigeon.rateWalk }}</p>
+                    </div>
+                    <div class="medium-rate">
+                        <p>Vibe</p>
+                        <p>{{ pigeon.rateVibe }}</p>
+                    </div>
+                </div>
+                {% if not userConnected %}
+                <p>Connectez-vous pour noter ce pigeon</p>
+                {% elif userConnected %}
+                <a id="rate-button" class="call-to-action"
+                    href="{{ url_for('cardPigeon', idPigeon=pigeon.idPigeon, showCommentForm=True) }}">Noter</a>
+                {% endif %}
+            </div>
 
-        {% if request.args.get('showCommentForm') == 'True' %}
+            <!-- {% if request.args.get('showCommentForm') == 'True' %}
         <form action="/pigeon/{{ pigeon.idPigeon }}/rate" method="post">
             <p>Originalité:</p>
             <input type="radio" id="1" name="noteoriginalite" value="1">
@@ -81,10 +96,11 @@
             <label for="5">5</label>
             <input type="submit" value="Valider">
         </form>
-        {% endif %}
+        {% endif %} -->
+        </div>
 
         <div>
-            <h2>Derniers commentaires</h2>
+            <h4>Derniers commentaires</h4>
             <div>
                 {% for comment in comments %}
                 <p>{{ comment.pseudoUser }}</p>
@@ -95,8 +111,8 @@
             {% if userConnected.pseudo %}
             <h2>Commenter</h2>
             <form action="/pigeon/{{ pigeon.idPigeon }}/comment" method="post">
-                <textarea name="comment" id="comment" cols="30" rows="10"></textarea>
-                <input type="submit" value="Poster">
+                <textarea name="comment" id="comment" cols="60" rows="5"></textarea>
+                <input class="call-to-action" type="submit" value="Poster">
             </form>
             {% elif not userConnected %}
             <p>Connectez-vous pour commenter</p>
@@ -104,25 +120,25 @@
         </div>
 
         <div>
-            <h2>Voir d'autres pigeons</h2>
-            <div>
-                <div class="cards-container">
-                    {% for randomPigeon in randomPigeons %}
-                    <a href="{{ url_for('cardPigeon', idPigeon=randomPigeon.idPigeon) }}" class="pigeon-card-link">
-                        <div class="pigeon-card">
-                            <img src="{{ randomPigeon.urlPhoto }}" alt="" style="width:100%">
-                            <b>
-                                <p class="pigeon-title">{{ randomPigeon.prenomPigeon }}</p>
-                            </b>
-                            <p><span>Couleur :</span> {{ randomPigeon.color }}</p>
-                            <p><span>Looté à :</span> {{ randomPigeon.place }}</p>
+            <h4>Voir d'autres pigeons</h4>
+            <div class="cards-container">
+                {% for randomPigeon in randomPigeons %}
+                <a href="{{ url_for('cardPigeon', idPigeon=randomPigeon.idPigeon) }}" class="pigeon-card-link">
+                    <div class="pigeon-card">
+                        <div class="pigeon-image" alt=""
+                            style="background:url('{{ randomPigeon.urlPhoto }}') center center/cover;">
                         </div>
-                    </a>
-                    {% endfor %}
-                </div>
+                        <b>
+                            <p class="pigeon-title">{{ randomPigeon.prenomPigeon }}</p>
+                        </b>
+                        <p><span>Couleur :</span> {{ randomPigeon.color }}</p>
+                        <p><span>Looté à :</span> {{ randomPigeon.place }}</p>
+                    </div>
+                </a>
+                {% endfor %}
             </div>
             <div id="explorer">
-            <p><a href="{{ url_for('galery') }}">Explorer</a>"</p>
+                <p><a class="call-to-action" href="{{ url_for('galery') }}">Explorer</a>"</p>
             </div>
         </div>
     </section>

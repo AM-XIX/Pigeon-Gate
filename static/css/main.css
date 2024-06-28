@@ -117,7 +117,8 @@ nav a:hover {
 }
 
 /* ====== BUTTONS ====== */
-#trending-header a, #principe a, #explorer a, input[type="submit"] {
+
+.call-to-action {
     padding:.8vw 2vw;
     border:4px solid var(--secondary);
     border-radius:10px;
@@ -129,7 +130,8 @@ nav a:hover {
     cursor: pointer;
 }
 
-#trending-header a:hover, #principe a:hover, #explorer a:hover, input[type="submit"]:hover {
+.call-to-action:hover {
+    transform: rotate(-2deg);
     background-color: var(--secondary);
     color:white;
 }
@@ -232,6 +234,10 @@ input[type="submit"]:hover, #trending-header a:hover {
 ::-ms-input-placeholder {
     /* Edge 12 -18 */
     color: var(--secondary);
+}
+
+textarea {
+    resize:none;
 }
 
 /* ====== SEARCH BAR ====== */

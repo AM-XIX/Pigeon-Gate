@@ -1,0 +1,55 @@
+#pigeon-info {
+    display:flex;
+    gap:0px 4vw;
+    margin-top:7vh;
+}
+
+#pigeon-info img {
+    width:18vw;
+    transform:rotate(-2deg);
+    border:4.5px solid var(--secondary);
+    border-radius:5px;
+}
+
+#all-rates {
+    padding-top:3vh;
+    margin-bottom:10vh;
+}
+
+#pigeon-text span {
+    font-weight:normal;
+    font-family: var(--text);
+    text-transform: capitalize;
+    font-size:2.1rem;
+}
+
+h3 {
+    margin:0;
+}
+
+h4 {
+    margin-top:6vh;
+}
+
+p {
+    margin:0;
+}
+
+textarea+input {
+    margin-top:3vh;
+}
+
+.medium-rate {
+    width:20vw;
+    margin-top:3vh;
+    padding-bottom:.5vh;
+    display:flex;
+    justify-content: space-between;
+    border-bottom:1.5px solid var(--secondary);
+    font-size:1.3rem;
+}
+
+.cards-container {
+    margin-top:3vh;
+    margin-bottom:5vh;
+}

@@ -36,7 +36,7 @@
   <section id="trending">
     <div id="trending-header">
       <h3>Trending ✨</h3>
-      <a href="{{ url_for('galery') }}">Explorer</a>
+      <a class="call-to-action" href="{{ url_for('galery') }}">Explorer</a>
       <button id="bullying">Bullying</button>
       <p id="sumUsers"></p>
     </div>
@@ -73,7 +73,7 @@
           Et qui sait, peut-être qu'un jour un de tes pigeons sera en trending!
         </p>
         {% if not pseudo %}
-        <a href="{{ url_for('register') }}">Rejoins-nous</a>
+        <a class="call-to-action" href="{{ url_for('register') }}">Rejoins-nous</a>
         {% endif %}
       </div>
     </div>
