@@ -10,7 +10,6 @@
 }
 
 /* ====== PRINCIPE SECTION ====== */
-
 #principe {
     margin-top:8vh;
 }
@@ -35,4 +34,24 @@
 
 .principe-container p {
     margin-bottom:5vh;
+}
+
+#welcome-sub-bar {
+    margin-top:5vh;
+    height:5vh;
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+}
+
+#bullying {
+    cursor:pointer;
+    text-decoration: underline;
+    background:transparent;
+    border:none;
+    color:var(--secondary);
+    font-family:var(--text);
+    padding:0 2vw;
+    font-size:1.5rem;
+    margin-left:8vw;
 }

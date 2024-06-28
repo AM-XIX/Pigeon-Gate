@@ -244,7 +244,7 @@ textarea {
 
 #filter-bar {
     display:flex;
-    align-items: baseline;
+    align-items: flex-start;
     margin-top:1vh;
     margin-bottom:2vh;
 }
