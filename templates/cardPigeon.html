@@ -23,7 +23,7 @@
             {% if not userConnected %}
             <li><a href="{{ url_for('register') }}">S'inscrire</a></li>
             <li><a href="{{ url_for('login') }}">Se connecter</a></li>
-            {% elif userConnected.pseudo %}
+            {% elif userConnected %}
             <li><a href="{{ url_for('profil') }}">Mon profil</a></li>
             <li><a href="{{ url_for('logout') }}">Se déconnecter</a></li>
             {% endif %}
@@ -35,6 +35,7 @@
             <div id="pigeon-text">
                 <h3>{{ pigeon.prenomPigeon }} <span>- {{ pigeon.place }}</span></h3>
                 <p>Adopté par : {{ user.pseudo }}</p>
+                <p>{{ pigeon.nbLike }} ❤️</p>
                 <div id="all-rates">
                     <div class="medium-rate">
                         <p>Originalité</p>
