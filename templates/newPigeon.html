@@ -90,7 +90,7 @@
                 {% for categorie in allCategories %}
                 <div class="category-option">
                     <input type="checkbox" id="{{ categorie.idCat }}" name="categories" value="{{ categorie.idCat }}">
-                    <label for="{{ categorie.idCat }}">{{ categorie.nom }}</label>
+                    <label>{{ categorie.nom }}</label>
                 </div>
                 {% endfor %}
             </div>
