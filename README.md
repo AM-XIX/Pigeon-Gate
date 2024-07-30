@@ -7,6 +7,7 @@ Coded by Anna Maria, Louise and Angèle.<br>
 Pigeon Gate is the result of Anna Maria's over-active imagination. Following Louise's unhealthy obsession with pigeons, she imagined a site where Louise could express her hyper-fixation without shame If you're wondering what Angèle has to do with it, she's decided to join Anna Maria and Louise's team to add her flavour to their somewhat... unusual idea.
 <p align="center">
 <img src="https://github.com/AM-XIX/Pigeon-Gate/assets/77757761/2657631d-29f2-41db-b31b-6608d4c73802" alt="Squad" width="300"/>
+</p>
 
 ## CONCEPT
  |      | Actions     |
